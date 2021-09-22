@@ -75,7 +75,7 @@
 <p>​       <code>​      </code><br>​        <img src="img/tu2.png" alt="tu2"><br>​        由此可以看出如果dns的地址出现错误，在访问域名时将无法访问</p>
 <h6 id="造成这样的原因："><a href="#造成这样的原因：" class="headerlink" title="造成这样的原因："></a>造成这样的原因：</h6><p>​          1.在访问域名时，pc端先将域名通过网络传给dns服务器，dns服务器在接受到域名后会返回该域名相关联的ip（可以通过科来来观察这个现象）</p>
 <p>​                      先在cmd使用nslookup指令进入dns调试环境</p>
-<p><img src="img%5Ctu5.png" alt="tu5"></p>
+<p><img src="img/tu5.png" alt="tu5"></p>
 <p>再打开科来</p>
 <p><img src="img/tu6.png" alt="tu6"></p>
 <p>在cmd中ping <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 可以看见</p>
@@ -84,11 +84,11 @@
 <p>DNS请求</p>
 <p><img src="img/123.png" alt="123"></p>
 <p>DNS回复</p>
-<p><img src="img%5C1234.png" alt="1234"></p>
+<p><img src="img/1234.png" alt="1234"></p>
 <p>可以看出科来中DNS Response 数据包中的答案的ip地址与cmd中的相同</p>
 <p>所以也可以从中看出一个域名不止对应一个ip</p>
 <h4 id="DNS的另一个作用：负载均衡"><a href="#DNS的另一个作用：负载均衡" class="headerlink" title="DNS的另一个作用：负载均衡"></a>DNS的另一个作用：负载均衡</h4><p>DNS除了能解析域名之外还具有负载均衡的功能，下面是利用DNS工作原理处理负载均衡的工作原理图：</p>
-<p><img src="img%5Ctu10.png" alt="tu10"></p>
+<p><img src="img/tu10.png" alt="tu10"></p>
 <p>由上图可以看出，在DNS服务器中应该配置了多个A记录，如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">www.apusapp.com IN A 114.100.20.201;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">www.apusapp.com IN A 114.100.20.202;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">www.apusapp.com IN A 114.100.20.203;</span><br></pre></td></tr></table></figure>
 
@@ -118,7 +118,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="cktvhvra90000k4tc1mwk02l1" class="article-share-link">
+      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="cktvihe8o00006ktc35yvd2vi" class="article-share-link">
         Share
       </a>
       
