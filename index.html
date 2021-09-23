@@ -97,78 +97,23 @@
         
       
       
-      <h2 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a>网络基础</h2><p>为后续的web安全做基础</p>
+        <h2 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a>网络基础</h2><p>为后续的web安全做基础</p>
 <h2 id="1-DNS相关知识"><a href="#1-DNS相关知识" class="headerlink" title="1.DNS相关知识"></a>1.DNS相关知识</h2><p> DNS：Domain Name System，域名解析系统<br>  1.建立IP地址与域名相关映射关系<br>  2.将域名解析为IP地址<br>  3.将IP地址解析为域名</p>
-<h3 id="DNS测试"><a href="#DNS测试" class="headerlink" title="DNS测试"></a>DNS测试</h3><h4 id="1-测试DNS的作用"><a href="#1-测试DNS的作用" class="headerlink" title="1.测试DNS的作用"></a>1.测试DNS的作用</h4><p>​       将DNS地址改为1.1.1.1<br>​       <img src="img/tu1.png" alt="tu1"><br>​       在cmd中ping一下百度的域名，如<br>​       <code>​      </code></p>
+<h3 id="DNS测试"><a href="#DNS测试" class="headerlink" title="DNS测试"></a>DNS测试</h3><h4 id="测试DNS的一个作用：解析域名"><a href="#测试DNS的一个作用：解析域名" class="headerlink" title="测试DNS的一个作用：解析域名"></a>测试DNS的一个作用：解析域名</h4><p>​       将DNS地址改为1.1.1.1<br>​       <img src="img/tu1.png" alt="tu1"><br>​       在cmd中ping一下百度的域名，如<br>​       <code>​      </code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
 
 <p>​       <code>​      </code><br>​        <img src="img/tu2.png" alt="tu2"><br>​        由此可以看出如果dns的地址出现错误，在访问域名时将无法访问</p>
-<h6 id="造成这样的原因："><a href="#造成这样的原因：" class="headerlink" title="造成这样的原因："></a>造成这样的原因：</h6><p>​          1.在访问域名时，pc端先将域名通过网络传给dns服务器，dns服务器在接受到域名后会返回该域名相关联的ip（可以通过科来来观察这个现象）</p>
-<p>​                      先在cmd使用nslookup指令进入dns调试环境</p>
-<p><img src="img/tu5.png" alt="tu5"></p>
-<p>再打开科来</p>
-<p><img src="img/tu6.png" alt="tu6"></p>
-<p>在cmd中ping <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 可以看见</p>
-<p><img src="img/tu7.png" alt="tu7"></p>
-<p>在科来可以看见</p>
-<p>DNS请求</p>
-<p><img src="img/123.png" alt="123"></p>
-<p>DNS回复</p>
-<p><img src="img/1234.png" alt="1234"></p>
-<p>可以看出科来中DNS Response 数据包中的答案的ip地址与cmd中的相同</p>
-<p>所以也可以从中看出一个域名不止对应一个ip</p>
-<table>
-<thead>
-<tr>
-<th align="center">CMD 命令</th>
-<th align="center">备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">nslookup</td>
-<td align="center">DNS调试工具</td>
-</tr>
-<tr>
-<td align="center">ipconfig /displaydns</td>
-<td align="center">查看DNS缓存</td>
-</tr>
-<tr>
-<td align="center">ipconfig /flushdns</td>
-<td align="center">清空DNS缓存</td>
-</tr>
-</tbody></table>
-<h4 id="DNS的另一个作用：负载均衡"><a href="#DNS的另一个作用：负载均衡" class="headerlink" title="DNS的另一个作用：负载均衡"></a>DNS的另一个作用：负载均衡</h4><p>DNS除了能解析域名之外还具有负载均衡的功能，下面是利用DNS工作原理处理负载均衡的工作原理图：</p>
-<p><img src="img/tu10.png" alt="tu10"></p>
-<p>由上图可以看出，在DNS服务器中应该配置了多个A记录，如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">www.apusapp.com IN A 114.100.20.201;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">www.apusapp.com IN A 114.100.20.202;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">www.apusapp.com IN A 114.100.20.203;</span><br></pre></td></tr></table></figure>
-
-<p>因此，每次域名解析请求都会根据对应的负载均衡算法计算出一个不同的IP地址并返回，这样A记录中配置多个服务器就可以构成一个集群，并可以实现负载均衡。上图中，用户请求<u><a target="_blank" rel="noopener" href="http://www.apusapp.com/">www.apusapp.com</a></u>的DNS根据A记录和负载均衡算法计算得到一个IP地址<u>114.100.20.203</u>，并返回给浏览器，浏览器根据该IP地址，访问真实的物理服务器<u>114.100.20.203</u>。所有这些操作对用户来说都是透明的，用户可能只知道<u><a target="_blank" rel="noopener" href="http://www.apusapp.com/">www.apusapp.com</a></u>这个域名。</p>
-<h4 id="1-DNS域名解析负载均衡有如下优点："><a href="#1-DNS域名解析负载均衡有如下优点：" class="headerlink" title="1.DNS域名解析负载均衡有如下优点："></a>1.DNS域名解析负载均衡有如下优点：</h4><ol>
-<li><p>将负载均衡的工作交给DNS，省去了网站管理维护负载均衡服务器的麻烦。</p>
-</li>
-<li><p>技术实现比较灵活、方便，简单易行，成本低，使用于大多数TCP/IP应用。</p>
-</li>
-<li><p>对于部署在服务器上的应用来说不需要进行任何的代码修改即可实现不同机器上的应用访问。</p>
-</li>
-<li><p>服务器可以位于互联网的任意位置。</p>
-</li>
-<li><p>同时许多DNS还支持基于地理位置的域名解析，即会将域名解析成距离用户地理最近的一个服务器地址，这样就可以加速用户访问，改善性能。</p>
-</li>
-</ol>
-<h4 id="2-DNS域名解析也存在如下缺点："><a href="#2-DNS域名解析也存在如下缺点：" class="headerlink" title="2.DNS域名解析也存在如下缺点："></a>2.DNS域名解析也存在如下缺点：</h4><ol>
-<li><p>目前的DNS是多级解析的，每一级DNS都可能缓存A记录，当某台服务器下线之后，即使修改了A记录，要使其生效也需要较长的时间，这段时间，DNS任然会将域名解析到已下线的服务器上，最终导致用户访问失败。</p>
-</li>
-<li><p>不能够按服务器的处理能力来分配负载。DNS负载均衡采用的是简单的轮询算法，不能区分服务器之间的差异，不能反映服务器当前运行状态，所以其的负载均衡效果并不是太好。</p>
-</li>
-<li><p>可能会造成额外的网络问题。为了使本DNS服务器和其他DNS服务器及时交互，保证DNS数据及时更新，使地址能随机分配，<br>一般都要将DNS的刷新时间设置的较小，但太小将会使DNS流量大增造成额外的网络问题。</p>
-</li>
-</ol>
-<p>  事实上，大型网站总是部分使用DNS域名解析，利用域名解析作为第一级负载均衡手段，即域名解析得到的一组服务器并不是实际提供服务的物理服务器，而是同样提供负载均衡服务器的内部服务器，这组内部负载均衡服务器再进行负载均衡，请求发到真实的服务器上，最终完成请求。</p>
-
+        
+          <p>
+            <a class="article-more-link" href="/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+              Read More...
+            </a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="cktvmbufm00001otccbrietoj" class="article-share-link">
+      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="cktwxo5250000c8tc7tbgg3dw" class="article-share-link">
         Share
       </a>
       
