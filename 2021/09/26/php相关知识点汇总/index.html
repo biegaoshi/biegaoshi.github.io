@@ -71,11 +71,53 @@
 <p>  但是在我实际使用中我发现了一个问题，当我使用die函数终止程序时，因为我在die函数前后都有定义一个同名的函数，在执行程序中发现了报错，我可以猜想出在使用die函数后，程序会识别后面的程序，但不会执行；</p>
 <p><img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/tu14.png?raw=true"></p>
 <p><img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/tu13.png?raw=true"></p>
+<span id="more"></span>
+
+<h2 id="2-PHP-array-sum-：计算数组中所有元素的和"><a href="#2-PHP-array-sum-：计算数组中所有元素的和" class="headerlink" title="2.PHP array_sum()：计算数组中所有元素的和"></a>2.PHP array_sum()：计算数组中所有元素的和</h2><p><a target="_blank" rel="noopener" href="http://m.biancheng.net/php/">PHP</a> array_sum() 函数用来计算数组中所有元素的和，其语法如下：</p>
+<p>number array_sum ( array $arr )</p>
+<p>如果数组 arr 的所有元素都是整数，则返回一个整数值；如果其中有一个或多个值是浮点数，则返回浮点数。</p>
+<p>如果数组 arr 中存在非数值类型的元素，那么 PHP 会尝试将它们转换成一个数值，转换失败就作为 0 值。例如，字符串 “45” 会被转换成整数 45，字符串 “12.4abc” 会被转换成小数 12.4，“1a7”会被转化成1。</p>
+<p>使用示例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$a = array(4, 2, 3, 10);</span><br><span class="line">echo array_sum($a) . &quot;&lt;br /&gt;&quot;;</span><br><span class="line">$b = array(&quot;10.1xy&quot;, 100, &#x27;1&#x27;, &quot;0.01&quot;，“1a7”);</span><br><span class="line">echo array_sum($b);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>执行以上程序的结果为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">19</span><br><span class="line">112.11</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-PHP脚本中的两种换行符的区别"><a href="#3-PHP脚本中的两种换行符的区别" class="headerlink" title="3.PHP脚本中的两种换行符的区别"></a>3.PHP脚本中的两种换行符的区别</h2><p>在编写PHP脚本代码的时候，我们经常会看到 \n和<br />这两个字符，它们都有换行的作用，那么到底有什么区别呢？</p>
+<pre><code>1.\n是使源代码换行，而浏览器显示的内容不换行,浏览器把\n转化成 （空格）；
+
+2.&lt;br /&gt;是使浏览器显示的内容换行，而源代码不换行。
+</code></pre>
+<p>例子：</p>
+<p>PHP代码1：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">echo 0;</span><br><span class="line"></span><br><span class="line">echo &quot;\n&quot;;</span><br><span class="line"></span><br><span class="line">echo 1;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>浏览器显示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 1</span><br></pre></td></tr></table></figure>
+
+<p>无换行</p>
+<p>查看源码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p> 有换行</p>
+<p>PHP代码2：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo 0;</span><br><span class="line">echo &quot;&lt;br /&gt;&quot;;</span><br><span class="line">echo 1;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>浏览器显示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line"></span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>  有换行</p>
+<p>查看源码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0&lt;br/&gt;1</span><br></pre></td></tr></table></figure>
+
+<p> 无换行</p>
+<p>好了，这就是\n和<br />的区别了，希望对大家有帮助。</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「Jokey_12138」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/hero_xsx/article/details/81055355">https://blog.csdn.net/hero_xsx/article/details/81055355</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="cku0r57im0000e8tcbgd41fn4" class="article-share-link">
+      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="cku4vfrmt0000votchve6feg3" class="article-share-link">
         Share
       </a>
       
