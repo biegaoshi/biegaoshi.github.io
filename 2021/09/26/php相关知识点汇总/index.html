@@ -112,11 +112,23 @@
 
 <p> 无换行</p>
 <p>好了，这就是\n和<code>&lt;br /&gt;</code>的区别了，希望对大家有帮助。</p>
+<h2 id="4-PHP，一个弱类型语言"><a href="#4-PHP，一个弱类型语言" class="headerlink" title="4.PHP，一个弱类型语言"></a>4.PHP，一个弱类型语言</h2><p>弱类型语言(php、js)，你想把这个变量当做什么类型来用，就当做什么类型来用，语言的解析器会自动（隐式）转换。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">如： var a =5;</span><br><span class="line"></span><br><span class="line">var b =&quot;5&quot;;</span><br><span class="line"></span><br><span class="line">var result = a+b;</span><br></pre></td></tr></table></figure>
+
+<p>因为 a与b 是js语言的弱类型定义，直接写a+b结果为10，因为弱类型语言在运行过程中，存在变量类型的隐式转换因为弱类型语言在运行过程中，存在变量类型的隐式转换，多了一些需要执行的操作，并且，分配内存时，会考虑通用而多分配一些，而强类型则专门为各种类型的变量量身定做地分配内存，内存利用率显然比弱类型会高。</p>
+<h2 id="5-PHP中的局部变量，全局变量，超全局变量"><a href="#5-PHP中的局部变量，全局变量，超全局变量" class="headerlink" title="5.PHP中的局部变量，全局变量，超全局变量"></a>5.PHP中的局部变量，全局变量，超全局变量</h2><h3 id="1-局部变量"><a href="#1-局部变量" class="headerlink" title="1.局部变量"></a>1.局部变量</h3><p>在函数内部声明的变量，就是局部变量，当函数执行完毕，局部变量就消失了。局部变量，只能在函数内部使用。</p>
+<h3 id="2-全局变量"><a href="#2-全局变量" class="headerlink" title="2.全局变量"></a>2.全局变量</h3><p>在函数外部声明的变量，就是全局变量。在 PHP 中，全局变量，在函数中不能使用，网页执行完毕，全局变量消失。</p>
+<p>如果需要在函数中使用可以使用<code>global</code>来来使得变量在函数中使用，同时如果你在函数中使用<code>global</code>只能让该变量在该函数中使用，如果在另一个函数中想要该变量已经需要使用<code>global</code>。</p>
+<h3 id="3-超全局变量"><a href="#3-超全局变量" class="headerlink" title="3.超全局变量"></a>3.超全局变量</h3><h2 id="6-PHP的and-or-amp-amp-断电（点）机制"><a href="#6-PHP的and-or-amp-amp-断电（点）机制" class="headerlink" title="6.PHP的and or &amp;&amp; || 断电（点）机制"></a>6.PHP的and or &amp;&amp; || 断电（点）机制</h2><p>php中在使用&amp;&amp;和||时会有一个断电机制</p>
+<p>如在使用&amp;&amp;（and）时</p>
+<p>因为&amp;&amp;是全为真时就是真，所以程序在进行判断时是会一直判断其代码是否为真，直到遇见为假的时候或该代码结束时结束，当程序在执行时遇到为假时该代码就会结束，不会在执行后面的程序。</p>
+<p>如在使用||（or）时</p>
+<p>因为||是部分为真就是真，所以在程序执行时只要它判断出其中一个代码为真，就会结束，不会在执行下面的代码。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="cku4vxixw0001t8tcc9xj9oot" class="article-share-link">
+      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckugvks0o000064tc04f5fq1f" class="article-share-link">
         Share
       </a>
       
