@@ -8,6 +8,7 @@
   
   
   <title>
+    php的正则表达式 |
     
     Hexo
   </title>
@@ -29,41 +30,8 @@
 
 <body>
   <main class="content">
-    <section class="jumbotron">
-  <div class="video">
-    
-    <div class="video-frame">
-      <img src="/images/ocean/overlay-hero.png" alt="Decorative image frame">
-    </div>
-    
-    <div class="video-media">
-      <video playsinline="" autoplay="" loop="" muted="" data-autoplay="" poster="/images/ocean/ocean.png"
-        x5-video-player-type="h5">
-        <source src="/images/ocean/ocean.mp4" type="video/mp4">
-        <source src="/images/ocean/ocean.ogv" type="video/ogg">
-        <source src="/images/ocean/ocean.webm" type="video/webm">
-        <p>Your user agent does not support the HTML5 Video element.</p>
-      </video>
-      <div class="video-overlay"></div>
-    </div>
-    <div class="video-inner text-center text-white">
-      <h1><a href="/">Hexo</a></h1>
-      <p></p>
-      <div><img src="/images/hexo-inverted.svg" class="brand" alt="Hexo"></div>
-    </div>
-    <div class="video-learn-more">
-      <a class="anchor" href="#landingpage"><i class="fe fe-mouse"></i></a>
-    </div>
-  </div>
-</section>
-<div id="landingpage">
-  <section class="outer">
-  <article class="articles">
-    
-    <h1 class="page-type-title"></h1>
-    
-    
-    <article id="post-php的正则表达式" class="article article-type-post" itemscope
+    <section class="outer">
+  <article id="post-php的正则表达式" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -71,9 +39,9 @@
     <header class="article-header">
       
 
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">php的正则表达式</a>
-</h2>
+<h1 class="article-title" itemprop="name">
+  php的正则表达式
+</h1>
 
 
 
@@ -90,11 +58,13 @@
     
 
     
+    
+<div class="tocbot"></div>
+
+    
 
     <div class="article-entry" itemprop="articleBody">
       
-      
-        
       
       
       <h1 id="1-PHP的正则表达式"><a href="#1-PHP的正则表达式" class="headerlink" title="1.PHP的正则表达式"></a>1.PHP的正则表达式</h1><p>正则表达式是一种描述字符串结果的语法规则，是一个特定的格式化模式，可以匹配、替换、截取匹配的字符串。常用的语言基本上都有正则表达式，如JavaScript、java等。其实，只有了解一种语言的正则使用，其他语言的正则使用起来，就相对简单些。好了，开始写正则了。</p>
@@ -347,155 +317,34 @@
   </div>
 
   
+  
+<nav class="article-nav">
+  
+  
+  <a href="/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" class="article-nav-link">
+    <strong class="article-nav-caption">Older</strong>
+    <div class="article-nav-title">php相关知识点汇总</div>
+  </a>
+  
+</nav>
 
+  
+
+  
+  
+  
   
 
 </article>
-    
-    <article id="post-php相关知识点汇总" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-      
-
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/">php相关知识点汇总</a>
-</h2>
-
-
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" class="article-date">
-  <time datetime="2021-09-26T02:47:01.000Z" itemprop="datePublished">2021-09-26</time>
-</a>
-      
-    </div>
-    
-
-    
-
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-        
-      
-      
-        <h1 id="PHP相关知识汇总"><a href="#PHP相关知识汇总" class="headerlink" title="PHP相关知识汇总"></a>PHP相关知识汇总</h1><h2 id="1-PHP中关于die使用和理解"><a href="#1-PHP中关于die使用和理解" class="headerlink" title="1.PHP中关于die使用和理解"></a>1.PHP中关于die使用和理解</h2><p>  在php如果使用die函数后，在die函数后面的内容程序就不会执行。</p>
-<p>  但是在我实际使用中我发现了一个问题，当我使用die函数终止程序时，因为我在die函数前后都有定义一个同名的函数，在执行程序中发现了报错，我可以猜想出在使用die函数后，程序会识别后面的程序，但不会执行；</p>
-<p><img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/tu14.png?raw=true"></p>
-<p><img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/tu13.png?raw=true"></p>
-        
-          <p>
-            <a class="article-more-link" href="/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/">
-              Read More...
-            </a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckuhz4w9k0001iotca9kfh36e" class="article-share-link">
-        Share
-      </a>
-      
-<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/" rel="tag">-PHP</a></li></ul>
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-</article>
-    
-    <article id="post-web安全-网络基础知识" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-      
-
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">web安全-网络基础知识</a>
-</h2>
-
-
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="article-date">
-  <time datetime="2021-09-22T08:29:20.000Z" itemprop="datePublished">2021-09-22</time>
-</a>
-      
-    </div>
-    
-
-    
-
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-        
-      
-      
-        <h1 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a>网络基础</h1><p>为后续的web安全做基础</p>
-<h2 id="1-DNS相关知识"><a href="#1-DNS相关知识" class="headerlink" title="1.DNS相关知识"></a>1.DNS相关知识</h2><p> DNS：Domain Name System，域名解析系统<br>  1.建立IP地址与域名相关映射关系<br>  2.将域名解析为IP地址<br>  3.将IP地址解析为域名</p>
-<h3 id="DNS测试"><a href="#DNS测试" class="headerlink" title="DNS测试"></a>DNS测试</h3><h4 id="测试DNS的一个作用：解析域名"><a href="#测试DNS的一个作用：解析域名" class="headerlink" title="测试DNS的一个作用：解析域名"></a>测试DNS的一个作用：解析域名</h4><p>​       将DNS地址改为1.1.1.1<br>​       <img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/tu1.png?raw=true" alt="tu1"><br>​       在cmd中ping一下百度的域名，如<br>​       <code>​      </code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
-
-<p>​       <code>​      </code><br>​        <img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/tu2.png?raw=true" alt="tu2"><br>​        由此可以看出如果dns的地址出现错误，在访问域名时将无法访问</p>
-        
-          <p>
-            <a class="article-more-link" href="/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-              Read More...
-            </a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="ckuhz4w9q0003iotcak50g74o" class="article-share-link">
-        Share
-      </a>
-      
-<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80-hexo-%E5%8D%9A%E5%AE%A2-%E7%A7%91%E6%9D%A5/" rel="tag">-网络基础 -hexo -博客 -科来</a></li></ul>
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-</article>
-    
-  </article>
-  
-
-  
 </section>
-</div>
     <footer class="footer">
   <div class="outer">
     <div class="float-right">
       <ul class="list-inline">
   
-  <li><i class="fe fe-bar-chart"></i> <span id="busuanzi_value_site_pv"></span></li>
-  
   <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+  <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
   
 </ul>
     </div>
@@ -590,6 +439,23 @@
 
 
 
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  });
+</script>
 
 
 
