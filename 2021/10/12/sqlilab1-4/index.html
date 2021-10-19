@@ -8,7 +8,7 @@
   
   
   <title>
-    sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题 |
+    sqlilab1-4 |
     
     Hexo
   </title>
@@ -31,7 +31,7 @@
 <body>
   <main class="content">
     <section class="outer">
-  <article id="post-sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题" class="article article-type-post" itemscope
+  <article id="post-sqlilab1-4" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -40,7 +40,7 @@
       
 
 <h1 class="article-title" itemprop="name">
-  sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题
+  sqlilab1-4
 </h1>
 
 
@@ -50,7 +50,7 @@
 
     
     <div class="article-meta">
-      <a href="/2021/10/12/sqlilab%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%88%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF%E7%9A%84GET%E5%8D%95%E5%BC%95%E5%8F%B7%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%EF%BC%89%E5%92%8C%E7%AC%AC%E4%BA%8C%E9%A2%98/" class="article-date">
+      <a href="/2021/10/12/sqlilab1-4/" class="article-date">
   <time datetime="2021-10-12T14:17:34.000Z" itemprop="datePublished">2021-10-12</time>
 </a>
       
@@ -67,7 +67,7 @@
       
       
       
-      <h1 id="sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题"><a href="#sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题" class="headerlink" title="sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题"></a>sqlilab的第一题（基于错误的GET单引号字符型注入）和第二题</h1><h3 id="什么是sql注入"><a href="#什么是sql注入" class="headerlink" title="什么是sql注入"></a>什么是sql注入</h3><p>　　SQL注入是比较常见的网络攻击方式之一，它不是利用操作系统的BUG来实现攻击，而是针对程序员编写时的疏忽，通过SQL语句，实现无账号登录，甚至篡改数据库</p>
+      <h2 id="sqlilab的第一题（基于错误的GET单引号字符型注入）"><a href="#sqlilab的第一题（基于错误的GET单引号字符型注入）" class="headerlink" title="sqlilab的第一题（基于错误的GET单引号字符型注入）"></a>sqlilab的第一题（基于错误的GET单引号字符型注入）</h2><h3 id="什么是sql注入"><a href="#什么是sql注入" class="headerlink" title="什么是sql注入"></a>什么是sql注入</h3><p>　　SQL注入是比较常见的网络攻击方式之一，它不是利用操作系统的BUG来实现攻击，而是针对程序员编写时的疏忽，通过SQL语句，实现无账号登录，甚至篡改数据库</p>
 <span id="more"></span>
 
 <p><strong>SQL注入攻击的总体思路</strong>　</p>
@@ -131,14 +131,19 @@
 <li>联合查询时需要将前面的查询结果限定为空集，后面的查询结果才能显示出来。</li>
 <li><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://baijiahao.baidu.com/s?id=1595349117525189591&wfr=spider&for=pc">concat(),concat_ws()与及group_concat()的用法</a></li>
 </ol>
-<p>sqlilab的第二题</p>
-<p>从开始通过前面的办法判断出sql注入为数字型注入</p>
+<h2 id="Less-2-GET-Error-based-Intiger-based-基于错误的GET整型注入"><a href="#Less-2-GET-Error-based-Intiger-based-基于错误的GET整型注入" class="headerlink" title="Less-2 GET - Error based - Intiger based (基于错误的GET整型注入)"></a>Less-2 GET - Error based - Intiger based (基于错误的GET整型注入)</h2><p>从开始通过前面的办法判断出sql注入为数字型注入</p>
 <p>其他与前面一样</p>
+<h2 id="Less-3-GET-Error-based-Single-quotes-with-twist-string-基于错误的GET单引号变形字符型注入"><a href="#Less-3-GET-Error-based-Single-quotes-with-twist-string-基于错误的GET单引号变形字符型注入" class="headerlink" title="Less-3 GET - Error based - Single quotes with twist string (基于错误的GET单引号变形字符型注入)"></a>Less-3 GET - Error based - Single quotes with twist string (基于错误的GET单引号变形字符型注入)</h2><p>输入单引号，根据报错信息确定咱们输入的内容存放到一对单引号加圆括号中了，猜想一下咱们输入1在数据库语句中的位置，形如select … from … where id=(‘1’) …，在第一题中id=1‘的后面单引号加上），其它保持不变就行了，不再赘述。</p>
+<h2 id="Less-4-GET-Error-based-Double-Quotes-String-（基于错误的GET双引号字符型注入）"><a href="#Less-4-GET-Error-based-Double-Quotes-String-（基于错误的GET双引号字符型注入）" class="headerlink" title="Less-4 GET - Error based - Double Quotes - String （基于错误的GET双引号字符型注入）"></a>Less-4 GET - Error based - Double Quotes - String （基于错误的GET双引号字符型注入）</h2><p>输入单引号，页面无任何变化，</p>
+<p>输入双引号，页面报错，</p>
+<p>根据报错信息判断出咱们输入的内容被放到一队双引号和圆括号中，</p>
+<p>猜想一下：select … from … where id=(”1”) …，把第一题中1后面的引号换成双引号加）就可以了。</p>
+<p>不再赘述。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/12/sqlilab%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A2%98%EF%BC%88%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF%E7%9A%84GET%E5%8D%95%E5%BC%95%E5%8F%B7%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5%EF%BC%89%E5%92%8C%E7%AC%AC%E4%BA%8C%E9%A2%98/" data-id="ckutams5j0004v8tc6gia3iq8" class="article-share-link">
+      <a data-url="http://example.com/2021/10/12/sqlilab1-4/" data-id="ckuy6khfh0001istcdsjq0nql" class="article-share-link">
         Share
       </a>
       
@@ -151,6 +156,15 @@
   
   
 <nav class="article-nav">
+  
+  <a href="/2021/10/16/%E2%80%9Csql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E2%80%9D/" class="article-nav-link">
+    <strong class="article-nav-caption">Newer</strong>
+    <div class="article-nav-title">
+      
+      “sql-labs报错注入”
+      
+    </div>
+  </a>
   
   
   <a href="/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" class="article-nav-link">
