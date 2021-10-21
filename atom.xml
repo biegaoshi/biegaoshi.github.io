@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>Bai</title>
   <icon>http://example.com/icon.png</icon>
   
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-19T14:37:14.543Z</updated>
+  <updated>2021-10-21T09:36:32.036Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,57 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>“sql-labs报错注入”</title>
-    <link href="http://example.com/2021/10/16/%E2%80%9Csql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E2%80%9D/"/>
-    <id>http://example.com/2021/10/16/%E2%80%9Csql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E2%80%9D/</id>
+    <title>sql布尔盲注</title>
+    <link href="http://example.com/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/"/>
+    <id>http://example.com/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/</id>
+    <published>2021-10-20T14:14:20.000Z</published>
+    <updated>2021-10-21T09:36:32.036Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;sql布尔盲注&quot;&gt;&lt;a href=&quot;#sql布尔盲注&quot; class=&quot;headerlink&quot; title=&quot;sql布尔盲注&quot;&gt;&lt;/a&gt;sql布尔盲注&lt;/h2&gt;&lt;h3 id=&quot;简介及使用场景：&quot;&gt;&lt;a href=&quot;#简介及使用场景：&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="sql布尔盲注" scheme="http://example.com/tags/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>sql时间盲注</title>
+    <link href="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/"/>
+    <id>http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/</id>
+    <published>2021-10-20T13:59:54.000Z</published>
+    <updated>2021-10-20T14:14:23.004Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;sql时间盲注&quot;&gt;&lt;a href=&quot;#sql时间盲注&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="sql时间盲注" scheme="http://example.com/tags/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>sql-labs报错注入</title>
+    <link href="http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/"/>
+    <id>http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/</id>
     <published>2021-10-16T08:31:46.000Z</published>
-    <updated>2021-10-19T14:37:14.543Z</updated>
+    <updated>2021-10-21T08:31:34.618Z</updated>
     
     
       

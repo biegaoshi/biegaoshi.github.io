@@ -8,9 +8,9 @@
   
   
   <title>
-    “sql-labs报错注入” |
+    sql-labs报错注入 |
     
-    Hexo
+    Bai
   </title>
   
     <link rel="shortcut icon" href="/favicon.ico">
@@ -26,13 +26,13 @@
   
 <script src="/js/pace.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Bai" type="application/atom+xml">
 </head>
 
 <body>
   <main class="content">
     <section class="outer">
-  <article id="post-“sql-labs报错注入”" class="article article-type-post" itemscope
+  <article id="post-sql-labs报错注入" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -41,7 +41,7 @@
       
 
 <h1 class="article-title" itemprop="name">
-  “sql-labs报错注入”
+  sql-labs报错注入
 </h1>
 
 
@@ -51,7 +51,7 @@
 
     
     <div class="article-meta">
-      <a href="/2021/10/16/%E2%80%9Csql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E2%80%9D/" class="article-date">
+      <a href="/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" class="article-date">
   <time datetime="2021-10-16T08:31:46.000Z" itemprop="datePublished">2021-10-16</time>
 </a>
       
@@ -134,19 +134,28 @@
 
 
 
+<p>关于为id=1 and （）这个格式的思考</p>
+<p>我们知道只有and前后的条件都为真的时候，数据库才会输出结果。</p>
+<p>（），但select语句放于（）中时，mysql会优先执行括号内的select语句</p>
+<p>首先我们先来看一下select语句的底层执行顺序</p>
+<p><img src="https://img2020.cnblogs.com/blog/1743015/202105/1743015-20210517111241925-429837106.png"></p>
+<p>当select语句在括号中时语句会有些执行括号select，之后括号中的select返回结果，符号where的语法格式</p>
+<p>而没有括号的select就会在词法分析器那边发生错误，因为where是不允许使用这样的语法格式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">where语法格式如下：</span><br><span class="line"></span><br><span class="line">WHERE &lt;查询条件&gt; &#123;&lt;判定运算1&gt;，&lt;判定运算2&gt;，…&#125;</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
+<p><img src="D:\博客\source\img\t1.png"></p>
+<p><img src="D:\博客\source\img\t2.png"></p>
+<p>我突然发现了一个更简洁的方法</p>
+<p><img src="D:\博客\source\img\t5.png"></p>
+<p>说明and后面加select是因为不能出现两个select</p>
+<p>而直接跟我们需要的函数是符合语法的</p>
+<p>其实我还有问题没想明白</p>
+<p>等我想明白再说把</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/16/%E2%80%9Csql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E2%80%9D/" data-id="ckuzfar9i000aqwtc8yzqggzx" class="article-share-link">
+      <a data-url="http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" data-id="ckv0r2y170004actcbu8ng1lf" class="article-share-link">
         Share
       </a>
       
@@ -159,6 +168,15 @@
   
   
 <nav class="article-nav">
+  
+  <a href="/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" class="article-nav-link">
+    <strong class="article-nav-caption">Newer</strong>
+    <div class="article-nav-title">
+      
+      sql时间盲注
+      
+    </div>
+  </a>
   
   
   <a href="/2021/10/12/sqlilab1-4/" class="article-nav-link">
@@ -189,7 +207,7 @@
 </ul>
     </div>
     <ul class="list-inline">
-      <li>Hexo &copy; 2021</li>
+      <li>Bai &copy; 2021</li>
       
         <li>ZHWANGART</li>
       
@@ -204,7 +222,7 @@
 <nav class="navbar">
   
   <div class="logo">
-    <a href="/"><img src="/images/hexo.svg" alt="Hexo"></a>
+    <a href="/"><img src="/images/hexo.svg" alt="Bai"></a>
   </div>
   
   <ul class="nav nav-main">

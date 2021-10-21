@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <title>
+    sql布尔盲注 |
+    
+    Bai
+  </title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Bai" type="application/atom+xml">
+</head>
+
+<body>
+  <main class="content">
+    <section class="outer">
+  <article id="post-sql布尔盲注" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h1 class="article-title" itemprop="name">
+  sql布尔盲注
+</h1>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" class="article-date">
+  <time datetime="2021-10-20T14:14:20.000Z" itemprop="datePublished">2021-10-20</time>
+</a>
+      
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+      <h2 id="sql布尔盲注"><a href="#sql布尔盲注" class="headerlink" title="sql布尔盲注"></a>sql布尔盲注</h2><h3 id="简介及使用场景："><a href="#简介及使用场景：" class="headerlink" title="简介及使用场景："></a>简介及使用场景：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在刚开始接触一个概念时，我们很容易顾名思义，所以在学习盲注之前的一段时间，着实不清楚盲注到底是什么。</span><br><span class="line"></span><br><span class="line">我的理解中盲注的本质就是，在页面无法给我提供回显的时候的一中继续注入的手段。那什么是布尔型盲注呢？在我们输入and 1或者and 0，浏览器返回给我们两个不同的页面，而我们就可以根据返回的页面来判断正确的数据信息。</span><br></pre></td></tr></table></figure>
+
+<h3 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h3><h4 id="length函数"><a href="#length函数" class="headerlink" title="length函数"></a>length函数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">length() 函数的返回值为字符串的字节长度，使用 uft8（UNICODE 的一种变长字符编码，又称万国码）编码字符集时，一个汉字是 3 个字节，一个数字或字母是一个字节。</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3d3dy5xaXVzaHVpLmZ1bi93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNi9OSjFJRENRX0dMM000NzRKLnBuZw?x-oss-process=image/format,png"></p>
+<h3 id="substr-函数："><a href="#substr-函数：" class="headerlink" title="substr()函数："></a>substr()函数：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">substr()函数从特定位置开始的字符串返回一个给定长度的子字符串</span><br><span class="line"></span><br><span class="line">substr()函数有三个参数，用法为：substr(str,pos,len)</span><br><span class="line"></span><br><span class="line">str参数代表待截取的字符串</span><br><span class="line"></span><br><span class="line">pos参数代表从什么位置开始截取</span><br><span class="line"></span><br><span class="line">len参数表示字符串截取的长度</span><br><span class="line"></span><br><span class="line">实例：select substr(&#x27;hello&#x27;,1,1)，如下图</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3d3dy5xaXVzaHVpLmZ1bi93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNi9FNVZCQlVHQV9OU1UyRVVDSS5wbmc?x-oss-process=image/format,png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">其他与substr()函数作用相似的函数有mid()和substring()函数，其用法和substr()函数一致</span><br><span class="line"></span><br><span class="line">实例：`select substring(&#x27;hello&#x27;,1,1)`和`select mid(&#x27;hello&#x27;,1,1)`，则都返回“h”</span><br></pre></td></tr></table></figure>
+
+<h3 id="ascil函数"><a href="#ascil函数" class="headerlink" title="ascil函数"></a>ascil函数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> ascii()函数可以输出某个字符的ascii码值，ascii码共127个，此处注意ascii函数处理单个字符，如果是字符串则会处理第一个字符</span><br><span class="line"></span><br><span class="line">实例：`select ascii(&#x27;h&#x27;)`，如下图</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3d3dy5xaXVzaHVpLmZ1bi93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNi9pbWFnZS5wbmc?x-oss-process=image/format,png"></p>
+<h3 id="注入实现"><a href="#注入实现" class="headerlink" title="注入实现"></a>注入实现</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">布尔盲注用到的函数length()、substr()和ascii()函数。</span><br><span class="line"></span><br><span class="line">这里直接用数据库阐述原理，在实际中，如下面的例子注入点为id=1，我们已经无法使用union来直接查询，此处我们需要用到关键字and，我们知道只有and前后的条件都为真的时候，数据库才会输出结果。</span><br></pre></td></tr></table></figure>
+
+<h3 id="判断数据库名的长度："><a href="#判断数据库名的长度：" class="headerlink" title="判断数据库名的长度："></a>判断数据库名的长度：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 首先我们来判断一下数据库的是几个字符，用到length()函数，此处选取的数据库名称为test，如下图所示当判断条件为大于4时，输出为Empty，当判断条件等于四时，输出了我们查询的数据，所以数据库名的字符个数为4。</span><br><span class="line"></span><br><span class="line">实例：select user from test where id=1&#x27; and length((select database()))=8 --+，其中(select database())为子查询，需要加括号，如下图</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\博客\source\img\t6.png"></p>
+<p><img src="D:\博客\source\img\t7.png"></p>
+<h3 id="猜解数据库名："><a href="#猜解数据库名：" class="headerlink" title="猜解数据库名："></a>猜解数据库名：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">我们已经知道了数据库名是四个字符，接下来我们可以使用substr()函数对数据库名的字符一个个截取。在通过ascii()函数判断字符的ascii码值,第一个字符的ascii码值为116，第二个为101，同养的步骤，第三个为115，第四个为116，然后和ascii码表比对，发现数据库名为test</span><br><span class="line"></span><br><span class="line">实例：select * from my1 where id=1 and ascii(substr((select database()),1,1))=98，如下图</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\博客\source\img\t8.png"></p>
+<h3 id="猜解表名："><a href="#猜解表名：" class="headerlink" title="猜解表名："></a>猜解表名：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">表名我们可以根据系统自带库information_schema进行查询，同理需要用到子查询，此处用到group_concat()函数拼接字符串，在这里可以把查到的数据表名通过逗号拼接起来，先猜解一下拼接的字符串长度，我们在把字符串一个个截取，最后得到一个数据表为test</span><br><span class="line"></span><br><span class="line">实例： select * from my1 where id=1 and length((select group_concat(table_name) from information_schema.tables where table_schema=database()))=6，如下图</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\博客\source\img\t9.png"></p>
+<h3 id="猜解字段："><a href="#猜解字段：" class="headerlink" title="猜解字段："></a>猜解字段：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">字段的猜解，我们也需要用到系统自带库的columns表，用到的函数和猜解数据库名一致，分别是：length()、substr()、ascii()函数，最后得出有三个字段分别为：id、user和pw</span><br><span class="line"></span><br><span class="line">实例：select user from test where id=1 and length((select group_concat(column_name) from information_schema.columns where table_name=&#x27;test&#x27; and table_schema=database()))=10</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>猜解数据：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表中数据的猜解，与上述方法类似，此处不再赘述</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" data-id="ckv0r2y180006actcgfmwbt5t" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" rel="tag">sql布尔盲注</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+<nav class="article-nav">
+  
+  
+  <a href="/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" class="article-nav-link">
+    <strong class="article-nav-caption">Older</strong>
+    <div class="article-nav-title">sql时间盲注</div>
+  </a>
+  
+</nav>
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+    <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+  <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+  <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>Bai &copy; 2021</li>
+      
+        <li>ZHWANGART</li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+  </main>
+  <aside class="sidebar">
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="Bai"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/gallery">Gallery</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/copybtn.js"></script>
+
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  });
+</script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+
+</html>
