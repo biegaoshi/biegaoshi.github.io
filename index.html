@@ -115,14 +115,14 @@
 
 <h3 id="判断数据库名的长度："><a href="#判断数据库名的长度：" class="headerlink" title="判断数据库名的长度："></a>判断数据库名的长度：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 首先我们来判断一下数据库的是几个字符，用到length()函数，此处选取的数据库名称为test，如下图所示当判断条件为大于4时，输出为Empty，当判断条件等于四时，输出了我们查询的数据，所以数据库名的字符个数为4。</span><br><span class="line"></span><br><span class="line">实例：select user from test where id=1&#x27; and length((select database()))=8 --+，其中(select database())为子查询，需要加括号，如下图</span><br></pre></td></tr></table></figure>
 
-<p><img src="D:\博客\source\img\t6.png"></p>
-<p><img src="D:\博客\source\img\t7.png"></p>
+<p><img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/t6.png?raw=true"></p>
+<p><img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/t7.png?raw=true"></p>
 <h3 id="猜解数据库名："><a href="#猜解数据库名：" class="headerlink" title="猜解数据库名："></a>猜解数据库名：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">我们已经知道了数据库名是四个字符，接下来我们可以使用substr()函数对数据库名的字符一个个截取。在通过ascii()函数判断字符的ascii码值,第一个字符的ascii码值为116，第二个为101，同养的步骤，第三个为115，第四个为116，然后和ascii码表比对，发现数据库名为test</span><br><span class="line"></span><br><span class="line">实例：select * from my1 where id=1 and ascii(substr((select database()),1,1))=98，如下图</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><img src="D:\博客\source\img\t8.png"></p>
+<p><img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/t8.png?raw=true"></p>
 <h3 id="猜解表名："><a href="#猜解表名：" class="headerlink" title="猜解表名："></a>猜解表名：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">表名我们可以根据系统自带库information_schema进行查询，同理需要用到子查询，此处用到group_concat()函数拼接字符串，在这里可以把查到的数据表名通过逗号拼接起来，先猜解一下拼接的字符串长度，我们在把字符串一个个截取，最后得到一个数据表为test</span><br><span class="line"></span><br><span class="line">实例： select * from my1 where id=1 and length((select group_concat(table_name) from information_schema.tables where table_schema=database()))=6，如下图</span><br></pre></td></tr></table></figure>
 
-<p><img src="D:\博客\source\img\t9.png"></p>
+<p><img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/t9.png?raw=true"></p>
 <h3 id="猜解字段："><a href="#猜解字段：" class="headerlink" title="猜解字段："></a>猜解字段：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">字段的猜解，我们也需要用到系统自带库的columns表，用到的函数和猜解数据库名一致，分别是：length()、substr()、ascii()函数，最后得出有三个字段分别为：id、user和pw</span><br><span class="line"></span><br><span class="line">实例：select user from test where id=1 and length((select group_concat(column_name) from information_schema.columns where table_name=&#x27;test&#x27; and table_schema=database()))=10</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p><strong>猜解数据：</strong></p>
@@ -132,7 +132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" data-id="ckv0r2y180006actcgfmwbt5t" class="article-share-link">
+      <a data-url="http://example.com/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" data-id="ckv0rclvo0006vwtcg6yv6rsr" class="article-share-link">
         Share
       </a>
       
@@ -186,7 +186,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" data-id="ckv0r2y190009actcbuf42l47" class="article-share-link">
+      <a data-url="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" data-id="ckv0rclvp0009vwtc5ry50eex" class="article-share-link">
         Share
       </a>
       
@@ -323,7 +323,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" data-id="ckv0r2y170004actcbu8ng1lf" class="article-share-link">
+      <a data-url="http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" data-id="ckv0rclvn0005vwtcae1n6g9b" class="article-share-link">
         Share
       </a>
       
@@ -384,7 +384,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/12/sqlilab1-4/" data-id="ckv0r2y170005actc7gle3kjh" class="article-share-link">
+      <a data-url="http://example.com/2021/10/12/sqlilab1-4/" data-id="ckv0rclvn0004vwtc9btn939o" class="article-share-link">
         Share
       </a>
       
@@ -438,7 +438,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="ckv0r2y0z0000actc8011dq1v" class="article-share-link">
+      <a data-url="http://example.com/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="ckv0rclvd0000vwtc0can2aud" class="article-share-link">
         Share
       </a>
       
@@ -725,7 +725,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-id="ckv0r2y130001actc95kzb2mc" class="article-share-link">
+      <a data-url="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-id="ckv0rclvh0001vwtcbs70892x" class="article-share-link">
         Share
       </a>
       
@@ -789,7 +789,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckv0r2y140002actc4xvqathc" class="article-share-link">
+      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckv0rclvj0002vwtcbzxz75y3" class="article-share-link">
         Share
       </a>
       
@@ -855,7 +855,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="ckv0r2y1a000aactcaohm6a3u" class="article-share-link">
+      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="ckv0rclvq000avwtc1mwv8ekm" class="article-share-link">
         Share
       </a>
       
