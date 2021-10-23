@@ -64,6 +64,58 @@
     <h1 class="page-type-title"></h1>
     
     
+    <article id="post-“sqlilab5-9”" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/10/23/%E2%80%9Csqlilab5-9%E2%80%9D/">“sqlilab5-9”</a>
+</h2>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/10/23/%E2%80%9Csqlilab5-9%E2%80%9D/" class="article-date">
+  <time datetime="2021-10-23T12:53:51.000Z" itemprop="datePublished">2021-10-23</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+      
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/10/23/%E2%80%9Csqlilab5-9%E2%80%9D/" data-id="ckv3t6mml000c5otcaav1efk7" class="article-share-link">
+        Share
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
     <article id="post-sql布尔盲注" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -132,7 +184,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" data-id="ckv0rclvo0006vwtcg6yv6rsr" class="article-share-link">
+      <a data-url="http://example.com/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" data-id="ckv3t6mm600065otcb4ab0n3p" class="article-share-link">
         Share
       </a>
       
@@ -182,11 +234,24 @@
         
       
       
-      <h2 id="sql时间盲注"><a href="#sql时间盲注" class="headerlink" title="sql时间盲注"></a>sql时间盲注</h2>
+      <h2 id="sql时间盲注"><a href="#sql时间盲注" class="headerlink" title="sql时间盲注"></a>sql时间盲注</h2><h4 id="SQL注入-时间注入"><a href="#SQL注入-时间注入" class="headerlink" title="SQL注入-时间注入"></a>SQL注入-时间注入</h4><p>​            时间注入攻击</p>
+<h4 id="时间注入攻击"><a href="#时间注入攻击" class="headerlink" title="时间注入攻击"></a>时间注入攻击</h4><p>利用sleep()或者benchmark()等函数让MySQL的执行时间变长。与IF(expr1,expr2,expr3)结合使用。当满足条件expr1时执行expr2，不满足时执行expr3。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.17.137/sql/Less-1/?id=1&#x27; and if(length(database())&gt;1,sleep(5),1)--+</span><br></pre></td></tr></table></figure>
+
+
+<p>执行时间为5s以上<br><img src="https://img-blog.csdnimg.cn/2021041613503592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeGluXzEwMTA=,size_16,color_FFFFFF,t_70"></p>
+<p>执行很短时间返回结果(正确会延迟5秒返回，错误直接返回)</p>
+<p><img src="https://img-blog.csdnimg.cn/20210416135113591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeGluXzEwMTA=,size_16,color_FFFFFF,t_70"></p>
+<p>多次使用length()可以判断数据库库名长度<br>知晓库名长度后使用substr函数逐位查询数据库库名字母</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.17.137/sql/Less-1/?id=1&#x27; and if(substr(database(),1,1)=&#x27;s&#x27;,sleep(5),1)--+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210416135535820.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeGluXzEwMTA=,size_16,color_FFFFFF,t_70"></p>
+<p>程序超过5s返回，证明数据库名第一位为’s’</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" data-id="ckv0rclvp0009vwtc5ry50eex" class="article-share-link">
+      <a data-url="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" data-id="ckv3t6mm900095otc4dpk3l9l" class="article-share-link">
         Share
       </a>
       
@@ -323,7 +388,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" data-id="ckv0rclvn0005vwtcae1n6g9b" class="article-share-link">
+      <a data-url="http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" data-id="ckv3t6mlr00025otc05n07kjn" class="article-share-link">
         Share
       </a>
       
@@ -384,7 +449,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/12/sqlilab1-4/" data-id="ckv0rclvn0004vwtc9btn939o" class="article-share-link">
+      <a data-url="http://example.com/2021/10/12/sqlilab1-4/" data-id="ckv3t6mm400055otccn4560zn" class="article-share-link">
         Share
       </a>
       
@@ -438,7 +503,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="ckv0rclvd0000vwtc0can2aud" class="article-share-link">
+      <a data-url="http://example.com/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="ckv3t6mla00005otcdov8f27f" class="article-share-link">
         Share
       </a>
       
@@ -725,7 +790,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-id="ckv0rclvh0001vwtcbs70892x" class="article-share-link">
+      <a data-url="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-id="ckv3t6mlm00015otc8zsjctal" class="article-share-link">
         Share
       </a>
       
@@ -789,7 +854,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckv0rclvj0002vwtcbzxz75y3" class="article-share-link">
+      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckv3t6mm200045otc3l5cfn5f" class="article-share-link">
         Share
       </a>
       
@@ -855,7 +920,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="ckv0rclvq000avwtc1mwv8ekm" class="article-share-link">
+      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="ckv3t6mmb000a5otcabqz4gwn" class="article-share-link">
         Share
       </a>
       
