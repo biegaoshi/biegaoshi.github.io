@@ -64,6 +64,109 @@
     <h1 class="page-type-title"></h1>
     
     
+    <article id="post-“mysql的文件导出”" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/10/24/%E2%80%9Cmysql%E7%9A%84%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E2%80%9D/">“mysql的文件导出”</a>
+</h2>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/10/24/%E2%80%9Cmysql%E7%9A%84%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E2%80%9D/" class="article-date">
+  <time datetime="2021-10-24T15:30:14.000Z" itemprop="datePublished">2021-10-24</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+      <h2 id="MySQL注入中的outfile、dumpfile、load-file函数详解"><a href="#MySQL注入中的outfile、dumpfile、load-file函数详解" class="headerlink" title="MySQL注入中的outfile、dumpfile、load_file函数详解"></a>MySQL注入中的outfile、dumpfile、load_file函数详解</h2><p>在利用sql注入漏洞后期，最常用的就是通过mysql的file系列函数来进行读取敏感文件或者写入webshell，其中比较常用的函数有以下三个</p>
+<ul>
+<li>into dumpfile()</li>
+<li>into outfile()</li>
+<li>load_file()</li>
+</ul>
+<p>测试如下：</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211024233223137.png"></p>
+<h3 id="读写文件函数调用的限制"><a href="#读写文件函数调用的限制" class="headerlink" title="读写文件函数调用的限制"></a>读写文件函数调用的限制</h3><p>因为涉及到在服务器上写入文件，所以上述函数能否成功执行受到参数 <code>secure_file_priv</code> 的影响。官方文档中的描述如下：</p>
+<p><img src="https://pic.superbed.cn/item/5d582f89451253d178b93a3b.jpg"></p>
+<p>翻译一下就是</p>
+<ul>
+<li>其中当参数 <code>secure_file_priv</code> 为空时，对导入导出无限制</li>
+<li>当值为一个指定的目录时，只能向指定的目录导入导出</li>
+<li>当值被设置为NULL时，禁止导入导出功能</li>
+</ul>
+<p>这个值可以通过命令 <code>select @@secure_file_priv</code> 查询。由于这个参数不能动态更改，只能在mysql的配置文件中进行修改，然后重启生效。</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211024233500078.png"></p>
+<h3 id="dumpfile与outfile的区别"><a href="#dumpfile与outfile的区别" class="headerlink" title="dumpfile与outfile的区别"></a>dumpfile与outfile的区别</h3><p><strong>导出数据库场景下的差异</strong></p>
+<p>select …… into outfile</p>
+<p>先来看一下mysql官方文档里对于这两个函数的解释</p>
+<p><img src="https://pic.superbed.cn/item/5d583005451253d178b944f1.jpg"></p>
+<p><img src="https://pic.superbed.cn/item/5d583014451253d178b94633.jpg"></p>
+<p>其中有两个值得注意的坑点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">outfile函数可以导出多行，而dumpfile只能导出一行数据</span><br><span class="line">outfile函数在将数据写到文件里时有特殊的格式转换，而dumpfile则保持原数据格式</span><br></pre></td></tr></table></figure>
+
+<p>接下来通过导出测试看看这里面的细节</p>
+<p>首先通过命令 <code>select * from test into outfile &#39;/tmp/test.txt&#39;</code> 来使用outfile导出</p>
+<p>可以看到文件 <code>/tmp/test.txt</code> 文件中保存了所有的数据并且在一行数据的末尾自动换行</p>
+<p>完整的路径为D:/tmp/test.txt</p>
+<p>通过查看官方文档，可以看出使用如下参数可以进行格式调整</p>
+<p><img src="https://pic.superbed.cn/item/5d58305a451253d178b94c7b.jpg"></p>
+<p>其中 <code>FIELDS ESCAPED BY</code> 可以用来对指定的字符进行转义， <code>FIELDS [OPTIONALLY] ENCLOSED BY</code> 用来对字段值进行包裹, <code>FIELDS TERMINATED BY</code> 用来对字段值之间进行分割</p>
+<p>例如使用如下命令 <code>select * from test into outfile &#39;/tmp/test.txt FIELDS TERMINATED BY &#39;,&#39; OPTIONALLY ENCLOSED BY &#39; &quot; &#39;LINES TERMINATED BY &#39;\n&#39;</code></p>
+<p>得到的导出文件如下</p>
+<p><img src="https://pic.superbed.cn/item/5d5830a2451253d178b95328.jpg"></p>
+<p>select …… into dumpfile</p>
+<p>而接着使用命令 <code>select * from test into dumpfile &#39;/tmp/test.txt&#39;</code> 使用dumpfile进行导出</p>
+<p>可以看到此命令在执行的时候提示输出超过一行</p>
+<p><img src="https://pic.superbed.cn/item/5d5830bc451253d178b95571.jpg"></p>
+<p>查看文件内容</p>
+<p><img src="https://pic.superbed.cn/item/5d5830d2451253d178b95766.jpg"></p>
+<p>可以看见通过dumpfile导出的数据行数据之间并未进行换行且只导出了部分数据</p>
+<h3 id="写入webshell或者udf下的差距"><a href="#写入webshell或者udf下的差距" class="headerlink" title="写入webshell或者udf下的差距"></a>写入webshell或者udf下的差距</h3><p>select …… into outfile</p>
+<p>使用命令 <code>select &#39;a\naa\raaaa&#39; into outfile &#39;/tmp/test.txt&#39;</code> 来看一下在常用的写文件场景下的结果</p>
+<p><img src="https://pic.superbed.cn/item/5d58310b451253d178b95b92.jpg"></p>
+<p>可以看到outfile对导出内容中的\n等特殊字符进行了转义，并且在文件内容的末尾增加了一个新行</p>
+<p>接着使用命令 <code>select &#39;a\naa\raaaa&#39; into dumpfile &#39;/tmp/test.txt&#39;</code> 来看一下</p>
+<p><img src="https://pic.superbed.cn/item/5d583137451253d178b95f31.jpg"></p>
+<p>可以看到dumpfile对文件内容是原意写入，未做任何转移和增加。这也就是为什么 <code>在平常的UDF提权中使用dumpfile进行dll文件</code> 写入的原因</p>
+<p>还有一个需要关注的点就是：outfile后面不能接0x开头或者char转换以后的路径，只能是单引号路径。这个问题在php注入中更加麻烦，因为会自动将单引号转义成’,那么基本就GG了，但是load_file，后面的路径可以是单引号、0x、char转换的字符，但是路径中的斜杠是/而不是\</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/10/24/%E2%80%9Cmysql%E7%9A%84%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E2%80%9D/" data-id="ckv5f73xk0009mctc1fzjd6ew" class="article-share-link">
+        Share
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
     <article id="post-“sqlilab5-9”" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -98,14 +201,23 @@
         
       
       
-      
+      <h2 id="sqlilab5-9"><a href="#sqlilab5-9" class="headerlink" title="sqlilab5-9"></a>sqlilab5-9</h2><h3 id="sqlilab5"><a href="#sqlilab5" class="headerlink" title="sqlilab5"></a>sqlilab5</h3><p>通过尝试可以得出存在注入点，而且为单引号注入</p>
+<p>由于没有回显</p>
+<p>可以通过报错注入、时间盲注、布尔盲注</p>
+<h3 id="sqlilab6"><a href="#sqlilab6" class="headerlink" title="sqlilab6"></a>sqlilab6</h3><p>通过尝试可以得出为双引号注入</p>
+<p>其他与第五题一样</p>
+<h3 id="sqlilab7"><a href="#sqlilab7" class="headerlink" title="sqlilab7"></a>sqlilab7</h3><p>通过尝试得出为((‘id’))的形式，同时通过尝试无法使用报错注入，但是可以使用时间盲注和布尔盲注</p>
+<p>可是通过提示发现要求我们使用<code>outfile</code></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/23/%E2%80%9Csqlilab5-9%E2%80%9D/" data-id="ckv3t6mml000c5otcaav1efk7" class="article-share-link">
+      <a data-url="http://example.com/2021/10/23/%E2%80%9Csqlilab5-9%E2%80%9D/" data-id="ckv5f73xo000dmctcderp9dkd" class="article-share-link">
         Share
       </a>
       
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqlilab/" rel="tag">sqlilab</a></li></ul>
+
     </footer>
 
   </div>
@@ -184,7 +296,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" data-id="ckv3t6mm600065otcb4ab0n3p" class="article-share-link">
+      <a data-url="http://example.com/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" data-id="ckv5f73xh0005mctc5j2xbwiy" class="article-share-link">
         Share
       </a>
       
@@ -251,7 +363,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" data-id="ckv3t6mm900095otc4dpk3l9l" class="article-share-link">
+      <a data-url="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" data-id="ckv5f73xj0008mctc7sw1dgmc" class="article-share-link">
         Share
       </a>
       
@@ -388,7 +500,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" data-id="ckv3t6mlr00025otc05n07kjn" class="article-share-link">
+      <a data-url="http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" data-id="ckv5f73x40001mctc9xf21u2b" class="article-share-link">
         Share
       </a>
       
@@ -449,64 +561,12 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/12/sqlilab1-4/" data-id="ckv3t6mm400055otccn4560zn" class="article-share-link">
+      <a data-url="http://example.com/2021/10/12/sqlilab1-4/" data-id="ckv5f73xe0004mctc36a60c0a" class="article-share-link">
         Share
       </a>
       
 <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql%E6%B3%A8%E5%85%A5/" rel="tag">sql注入</a></li></ul>
 
-    </footer>
-
-  </div>
-
-  
-
-  
-
-</article>
-    
-    <article id="post-mysql的增删改查" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-      
-
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">mysql的增删改查</a>
-</h2>
-
-
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" class="article-date">
-  <time datetime="2021-10-11T02:14:07.000Z" itemprop="datePublished">2021-10-11</time>
-</a>
-      
-    </div>
-    
-
-    
-
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-        
-      
-      
-      
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/11/mysql%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="ckv3t6mla00005otcdov8f27f" class="article-share-link">
-        Share
-      </a>
-      
     </footer>
 
   </div>
@@ -790,7 +850,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-id="ckv3t6mlm00015otc8zsjctal" class="article-share-link">
+      <a data-url="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-id="ckv5f73wz0000mctc2sj04g5n" class="article-share-link">
         Share
       </a>
       
@@ -854,7 +914,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckv3t6mm200045otc3l5cfn5f" class="article-share-link">
+      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckv5f73xd0003mctc7s109qut" class="article-share-link">
         Share
       </a>
       
@@ -920,7 +980,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="ckv3t6mmb000a5otcabqz4gwn" class="article-share-link">
+      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="ckv5f73xm000bmctcbz6xhbz7" class="article-share-link">
         Share
       </a>
       
