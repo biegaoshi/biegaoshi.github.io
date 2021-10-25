@@ -8,7 +8,7 @@
   
   
   <title>
-    sql时间盲注 |
+    “文件路径：\和/区别” |
     
     Bai
   </title>
@@ -32,7 +32,7 @@
 <body>
   <main class="content">
     <section class="outer">
-  <article id="post-sql时间盲注" class="article article-type-post" itemscope
+  <article id="post-“文件路径的小问题”" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -41,7 +41,7 @@
       
 
 <h1 class="article-title" itemprop="name">
-  sql时间盲注
+  “文件路径：\和/区别”
 </h1>
 
 
@@ -51,8 +51,8 @@
 
     
     <div class="article-meta">
-      <a href="/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" class="article-date">
-  <time datetime="2021-10-20T13:59:54.000Z" itemprop="datePublished">2021-10-20</time>
+      <a href="/2021/10/25/%E2%80%9C%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98%E2%80%9D/" class="article-date">
+  <time datetime="2021-10-25T02:01:17.000Z" itemprop="datePublished">2021-10-25</time>
 </a>
       
     </div>
@@ -68,28 +68,17 @@
       
       
       
-      <h2 id="sql时间盲注"><a href="#sql时间盲注" class="headerlink" title="sql时间盲注"></a>sql时间盲注</h2><h4 id="SQL注入-时间注入"><a href="#SQL注入-时间注入" class="headerlink" title="SQL注入-时间注入"></a>SQL注入-时间注入</h4><p>​            时间注入攻击</p>
-<h4 id="时间注入攻击"><a href="#时间注入攻击" class="headerlink" title="时间注入攻击"></a>时间注入攻击</h4><p>利用sleep()或者benchmark()等函数让MySQL的执行时间变长。与IF(expr1,expr2,expr3)结合使用。当满足条件expr1时执行expr2，不满足时执行expr3。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.17.137/sql/Less-1/?id=1&#x27; and if(length(database())&gt;1,sleep(5),1)--+</span><br></pre></td></tr></table></figure>
-
-
-<p>执行时间为5s以上<br><img src="https://img-blog.csdnimg.cn/2021041613503592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeGluXzEwMTA=,size_16,color_FFFFFF,t_70"></p>
-<p>执行很短时间返回结果(正确会延迟5秒返回，错误直接返回)</p>
-<p><img src="https://img-blog.csdnimg.cn/20210416135113591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeGluXzEwMTA=,size_16,color_FFFFFF,t_70"></p>
-<p>多次使用length()可以判断数据库库名长度<br>知晓库名长度后使用substr函数逐位查询数据库库名字母</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.17.137/sql/Less-1/?id=1&#x27; and if(substr(database(),1,1)=&#x27;s&#x27;,sleep(5),1)--+</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img-blog.csdnimg.cn/20210416135535820.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeGluXzEwMTA=,size_16,color_FFFFFF,t_70"></p>
-<p>程序超过5s返回，证明数据库名第一位为’s’</p>
+      <h2 id="文件路径：-和-区别"><a href="#文件路径：-和-区别" class="headerlink" title="文件路径：\和/区别"></a>文件路径：\和/区别</h2><p>Unix使用斜杆/ 作为路径分隔符，而web应用最新使用在Unix系统上面，所以目前所有的网络地址都采用 斜杆/ 作为分隔符。<br>Windows由于使用 斜杆/ 作为DOS命令提示符的参数标志了，为了不混淆，所以采用 反斜杠\ 作为路径分隔符。所以目前windows系统上的文件浏览器都是用 反斜杠\ 作为路径分隔符。随着发展，DOS系统已经被淘汰了，命令提示符也用的很少，斜杆和反斜杠在大多数情况下可以互换，没有影响。<br>知道这个背景后，可以总结一下结论：<br>（1）浏览器地址栏网址使用 斜杆/ ;<br>（2）windows文件浏览器上使用 反斜杠\ ;<br>（3）出现在html url() 属性中的路径，指定的路径是网络路径，所以必须用 斜杆/ ;<br>// 如果url后面用反斜杠，就不会显示任何背景<br>（4）出现在普通字符串中的路径，如果代表的是windows文件路径，则使用斜杆/和反斜杠\是一样的；如果代表的是网络文件路径，则必须使用 斜杆/ ;<br>// 本地文件路径，/ 和 \ 是等效的<br>// 网络文件路径，一定要使用 斜杆/<br>（5）windows系统的地址栏能够识别单反斜杠”&quot;，而不能识别双反斜杠”\“，这是系统文件系统自身的约定，路径层次使用“\”区分而不是使用“\”来区分：<br>所以F:\Office\Trunk__Out\Pro Debug\Bin\OfficeInfo.dll这样是不正确的。<br>而在程序中，字符串中的“\”主要是为了转义，“\”转义后被理解为“\”,“\”才能够被操作系统文件系统所理解，比如用字符串表示上述路径：“F:\Office\Trunk\__Out\Pro Debug\Bin\OfficeIn可以fo.dll”，同理，如果想要表示“\”，可以写作“\\”。</p>
+<p>在不同系统的情况系 windows下是,linux和unix下是/ 但在win中没有本质区别。<br>但是由于 \ 也是转义字符的起始字符，<br>所以，路径中的 \ 通常需要使用 \如果是 / 就不需要使用转义了<br>如C中文件操作，c:\kkk\dd.txt c:/kkk/dd.txt一样<br>“./“：代表目前所在的目录<br>“../“：代表上一层目录<br>\ 用于本地/ 用于网络连接地址</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/10/20/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" data-id="ckv629esl0008q4tc6baohyvx" class="article-share-link">
+      <a data-url="http://example.com/2021/10/25/%E2%80%9C%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98%E2%80%9D/" data-id="ckv629esp000fq4tcg03u1e5q" class="article-share-link">
         Share
       </a>
       
-<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8/" rel="tag">sql时间盲注</a></li></ul>
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/" rel="tag">文件路径</a></li></ul>
 
     </footer>
 
@@ -99,19 +88,19 @@
   
 <nav class="article-nav">
   
-  <a href="/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" class="article-nav-link">
+  <a href="/2021/10/25/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E7%90%86%E8%A7%A3/" class="article-nav-link">
     <strong class="article-nav-caption">Newer</strong>
     <div class="article-nav-title">
       
-      sql布尔盲注
+      一句话木马的使用和理解
       
     </div>
   </a>
   
   
-  <a href="/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" class="article-nav-link">
+  <a href="/2021/10/24/%E2%80%9Cmysql%E7%9A%84%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E2%80%9D/" class="article-nav-link">
     <strong class="article-nav-caption">Older</strong>
-    <div class="article-nav-title">sql-labs报错注入</div>
+    <div class="article-nav-title">“mysql的文件导出”</div>
   </a>
   
 </nav>
