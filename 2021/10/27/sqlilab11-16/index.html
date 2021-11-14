@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="sqlilab11-161234一些与前十题不一样的地方1、注释方式，前面十题的注释方式为--+，mysql中的注释方式为-- 或#，在url中+会被替换成 （空格）。而在post中由于是通过表格，所以不用遵守url的规则，所以注释方式变为-- 或#  从第十题以后，接受数据的方式由get变为了post sqlilab11通过尝试得出是单引号字符注入 不过尝试方法与前十题不同  由于我们不知道us">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqlilab11-16">
+<meta property="og:url" content="http://example.com/2021/10/27/sqlilab11-16/index.html">
+<meta property="og:site_name" content="Bai">
+<meta property="og:description" content="sqlilab11-161234一些与前十题不一样的地方1、注释方式，前面十题的注释方式为--+，mysql中的注释方式为-- 或#，在url中+会被替换成 （空格）。而在post中由于是通过表格，所以不用遵守url的规则，所以注释方式变为-- 或#  从第十题以后，接受数据的方式由get变为了post sqlilab11通过尝试得出是单引号字符注入 不过尝试方法与前十题不同  由于我们不知道us">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/夜风/AppData/Roaming/Typora/typora-user-images/image-20211027190422561.png">
+<meta property="og:image" content="c:/Users/夜风/AppData/Roaming/Typora/typora-user-images/image-20211027190818800.png">
+<meta property="og:image" content="c:/Users/夜风/AppData/Roaming/Typora/typora-user-images/image-20211027191243396.png">
+<meta property="article:published_time" content="2021-10-27T10:43:26.000Z">
+<meta property="article:modified_time" content="2021-10-27T11:51:17.888Z">
+<meta property="article:author" content="JIE">
+<meta property="article:tag" content="sqlilab">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/夜风/AppData/Roaming/Typora/typora-user-images/image-20211027190422561.png">
+
+
+<link rel="canonical" href="http://example.com/2021/10/27/sqlilab11-16/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/10/27/sqlilab11-16/","path":"2021/10/27/sqlilab11-16/","title":"sqlilab11-16"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>sqlilab11-16 | Bai</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Bai" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Bai</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录学习的思考</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#sqlilab11-16"><span class="nav-number">1.</span> <span class="nav-text">sqlilab11-16</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sqlilab11"><span class="nav-number">1.1.</span> <span class="nav-text">sqlilab11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sqlilab12"><span class="nav-number">1.2.</span> <span class="nav-text">sqlilab12</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sqlilab13"><span class="nav-number">1.3.</span> <span class="nav-text">sqlilab13</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sqlilab14"><span class="nav-number">1.4.</span> <span class="nav-text">sqlilab14</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sqlilab15"><span class="nav-number">1.5.</span> <span class="nav-text">sqlilab15</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sqlilab16"><span class="nav-number">1.6.</span> <span class="nav-text">sqlilab16</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">JIE</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml">RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/27/sqlilab11-16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIE">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bai">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sqlilab11-16
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-10-27 18:43:26 / 修改时间：19:51:17" itemprop="dateCreated datePublished" datetime="2021-10-27T18:43:26+08:00">2021-10-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="sqlilab11-16"><a href="#sqlilab11-16" class="headerlink" title="sqlilab11-16"></a>sqlilab11-16</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一些与前十题不一样的地方</span><br><span class="line"></span><br><span class="line">1、注释方式，前面十题的注释方式为--+，mysql中的注释方式为-- 或#，在url中+会被替换成 （空格）。而在post中由于是通过表格，所以不用遵守url的规则，所以注释方式变为-- 或#</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>从第十题以后，接受数据的方式由get变为了post</p>
+<h3 id="sqlilab11"><a href="#sqlilab11" class="headerlink" title="sqlilab11"></a>sqlilab11</h3><p>通过尝试得出是单引号字符注入</p>
+<p>不过尝试方法与前十题不同</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211027190422561.png"></p>
+<p>由于我们不知道username和password的值，所以不能和之前一样通过?id=1 –+来一遍一遍的试它的注入类型（主要原因是因为不能直接看回显）</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211027190818800.png"></p>
+<p>通过代码我们可以直接看出只有我们输入username和password的值在mysql中存在，这样才会让$row的值为真，这样才会回显，而前十题的代码不同</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211027191243396.png"></p>
+<p>因为id的值很好猜基本都是数字，所以id=1基本存在，不会出去前面的问题</p>
+<p>所以要解决这个问题我们可以引入一个方法，为万能密码，基本格式为 <code>admin or 1=1</code></p>
+<p>主要在后面的or 1=1</p>
+<p>or的概念大家都懂就不说</p>
+<p>而1=1代表永真</p>
+<p>因为我们不知道username的值，所以or前面的值为假，而or的值为真，通过or的方法，就能实现整体为真，这样我们就能判断注入的类型admin的值可以被替换</p>
+<p>ok我们回归正题，在发现注入类型后基本就很简单了，可以用很多方法，直接查，如sqlilab1-4的方法，或者报错，时间，布尔，或者outfile（这个要有权限）</p>
+<h3 id="sqlilab12"><a href="#sqlilab12" class="headerlink" title="sqlilab12"></a>sqlilab12</h3><p>通过尝试得出为双引号加括号，格式为(“username”)</p>
+<p>因为由回显，所以与sqlilab11一样</p>
+<h3 id="sqlilab13"><a href="#sqlilab13" class="headerlink" title="sqlilab13"></a>sqlilab13</h3><p>通过尝试得出为单引号加括号，格式为(‘username’)</p>
+<p>因为没有回显，但是由报错，所以可以直接用报错，时间，布尔来注入</p>
+<h3 id="sqlilab14"><a href="#sqlilab14" class="headerlink" title="sqlilab14"></a>sqlilab14</h3><p>通过尝试得出为双引号注入</p>
+<p>没有回显，与13题基本相同</p>
+<h3 id="sqlilab15"><a href="#sqlilab15" class="headerlink" title="sqlilab15"></a>sqlilab15</h3><p>通过尝试得出为单引号注入</p>
+<p>没有回显，与报错。所以只能用时间和布尔</p>
+<h3 id="sqlilab16"><a href="#sqlilab16" class="headerlink" title="sqlilab16"></a>sqlilab16</h3><p>通过尝试得双引号加括号，格式为(“username”)</p>
+<p>没有回显，与报错。所以只能用时间和布尔</p>
+<p>还有一些思考还没想好，最近会学习一些黑客软件</p>
+<p>等一段时间后应该会打一打攻防世界</p>
+<p>祝未来一切顺利</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/sqlilab/" rel="tag"># sqlilab</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/25/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E7%90%86%E8%A7%A3/" rel="prev" title="一句话木马的使用和理解">
+                  <i class="fa fa-chevron-left"></i> 一句话木马的使用和理解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E5%88%9D%E4%BD%93%E9%AA%8C/" rel="next" title="攻防世界初体验">
+                  攻防世界初体验 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JIE</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

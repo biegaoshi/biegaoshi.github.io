@@ -2,19 +2,112 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Bai</title>
   <icon>http://example.com/icon.png</icon>
-  
+  <subtitle>记录学习的思考</subtitle>
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-25T02:46:54.869Z</updated>
+  <updated>2021-11-06T11:22:13.936Z</updated>
   <id>http://example.com/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>JIE</name>
     
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>“sqlilab17-23”</title>
+    <link href="http://example.com/2021/11/06/%E2%80%9Csqlilab17-23%E2%80%9D/"/>
+    <id>http://example.com/2021/11/06/%E2%80%9Csqlilab17-23%E2%80%9D/</id>
+    <published>2021-11-06T08:12:35.000Z</published>
+    <updated>2021-11-06T11:22:13.936Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;sqlilab17-23&quot;&gt;&lt;a href=&quot;#sqlilab17-23&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>http详解</title>
+    <link href="http://example.com/2021/11/03/http%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://example.com/2021/11/03/http%E8%AF%A6%E8%A7%A3/</id>
+    <published>2021-11-03T09:09:43.000Z</published>
+    <updated>2021-11-03T09:09:43.896Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>简述HTML中post与get请求的区别以及http头部分析</title>
+    <link href="http://example.com/2021/10/31/%E7%AE%80%E8%BF%B0HTML%E4%B8%ADpost%E4%B8%8Eget%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://example.com/2021/10/31/%E7%AE%80%E8%BF%B0HTML%E4%B8%ADpost%E4%B8%8Eget%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/</id>
+    <published>2021-10-31T11:03:07.000Z</published>
+    <updated>2021-10-31T15:58:52.526Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;HTTP头部详解&quot;&gt;&lt;a href=&quot;#HTTP头部详解&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="http头部" scheme="http://example.com/tags/http%E5%A4%B4%E9%83%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>攻防世界初体验</title>
+    <link href="http://example.com/2021/10/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E5%88%9D%E4%BD%93%E9%AA%8C/"/>
+    <id>http://example.com/2021/10/27/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E5%88%9D%E4%BD%93%E9%AA%8C/</id>
+    <published>2021-10-27T12:33:30.000Z</published>
+    <updated>2021-10-27T12:33:30.634Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>sqlilab11-16</title>
+    <link href="http://example.com/2021/10/27/sqlilab11-16/"/>
+    <id>http://example.com/2021/10/27/sqlilab11-16/</id>
+    <published>2021-10-27T10:43:26.000Z</published>
+    <updated>2021-10-27T11:51:17.888Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;sqlilab11-16&quot;&gt;&lt;a href=&quot;#sqlilab11-16&quot; class=&quot;headerlink&quot; title=&quot;sqlilab11-16&quot;&gt;&lt;/a&gt;sqlilab11-16&lt;/h2&gt;&lt;figure class=&quot;highlight</summary>
+        
+      
+    
+    
+    
+    
+    <category term="sqlilab" scheme="http://example.com/tags/sqlilab/"/>
+    
+  </entry>
   
   <entry>
     <title>一句话木马的使用和理解</title>
@@ -147,7 +240,7 @@
     <link href="http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/"/>
     <id>http://example.com/2021/10/16/sql-labs%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/</id>
     <published>2021-10-16T08:31:46.000Z</published>
-    <updated>2021-10-21T08:31:34.618Z</updated>
+    <updated>2021-10-27T10:57:12.906Z</updated>
     
     
       
