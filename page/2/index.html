@@ -129,7 +129,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -168,6 +168,121 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/24/%E2%80%9Cmysql%E7%9A%84%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E2%80%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIE">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bai">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/24/%E2%80%9Cmysql%E7%9A%84%E6%96%87%E4%BB%B6%E5%AF%BC%E5%87%BA%E2%80%9D/" class="post-title-link" itemprop="url">“mysql的文件导出”</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-10-24 23:30:14 / 修改时间：23:58:17" itemprop="dateCreated datePublished" datetime="2021-10-24T23:30:14+08:00">2021-10-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="MySQL注入中的outfile、dumpfile、load-file函数详解"><a href="#MySQL注入中的outfile、dumpfile、load-file函数详解" class="headerlink" title="MySQL注入中的outfile、dumpfile、load_file函数详解"></a>MySQL注入中的outfile、dumpfile、load_file函数详解</h2><p>在利用sql注入漏洞后期，最常用的就是通过mysql的file系列函数来进行读取敏感文件或者写入webshell，其中比较常用的函数有以下三个</p>
+<ul>
+<li>into dumpfile()</li>
+<li>into outfile()</li>
+<li>load_file()</li>
+</ul>
+<p>测试如下：</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211024233223137.png"></p>
+<h3 id="读写文件函数调用的限制"><a href="#读写文件函数调用的限制" class="headerlink" title="读写文件函数调用的限制"></a>读写文件函数调用的限制</h3><p>因为涉及到在服务器上写入文件，所以上述函数能否成功执行受到参数 <code>secure_file_priv</code> 的影响。官方文档中的描述如下：</p>
+<p><img src="https://pic.superbed.cn/item/5d582f89451253d178b93a3b.jpg"></p>
+<p>翻译一下就是</p>
+<ul>
+<li>其中当参数 <code>secure_file_priv</code> 为空时，对导入导出无限制</li>
+<li>当值为一个指定的目录时，只能向指定的目录导入导出</li>
+<li>当值被设置为NULL时，禁止导入导出功能</li>
+</ul>
+<p>这个值可以通过命令 <code>select @@secure_file_priv</code> 查询。由于这个参数不能动态更改，只能在mysql的配置文件中进行修改，然后重启生效。</p>
+<p><img src="C:\Users\夜风\AppData\Roaming\Typora\typora-user-images\image-20211024233500078.png"></p>
+<h3 id="dumpfile与outfile的区别"><a href="#dumpfile与outfile的区别" class="headerlink" title="dumpfile与outfile的区别"></a>dumpfile与outfile的区别</h3><p><strong>导出数据库场景下的差异</strong></p>
+<p>select …… into outfile</p>
+<p>先来看一下mysql官方文档里对于这两个函数的解释</p>
+<p><img src="https://pic.superbed.cn/item/5d583005451253d178b944f1.jpg"></p>
+<p><img src="https://pic.superbed.cn/item/5d583014451253d178b94633.jpg"></p>
+<p>其中有两个值得注意的坑点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">outfile函数可以导出多行，而dumpfile只能导出一行数据</span><br><span class="line">outfile函数在将数据写到文件里时有特殊的格式转换，而dumpfile则保持原数据格式</span><br></pre></td></tr></table></figure>
+
+<p>接下来通过导出测试看看这里面的细节</p>
+<p>首先通过命令 <code>select * from test into outfile &#39;/tmp/test.txt&#39;</code> 来使用outfile导出</p>
+<p>可以看到文件 <code>/tmp/test.txt</code> 文件中保存了所有的数据并且在一行数据的末尾自动换行</p>
+<p>完整的路径为D:/tmp/test.txt</p>
+<p>通过查看官方文档，可以看出使用如下参数可以进行格式调整</p>
+<p><img src="https://pic.superbed.cn/item/5d58305a451253d178b94c7b.jpg"></p>
+<p>其中 <code>FIELDS ESCAPED BY</code> 可以用来对指定的字符进行转义， <code>FIELDS [OPTIONALLY] ENCLOSED BY</code> 用来对字段值进行包裹, <code>FIELDS TERMINATED BY</code> 用来对字段值之间进行分割</p>
+<p>例如使用如下命令 <code>select * from test into outfile &#39;/tmp/test.txt FIELDS TERMINATED BY &#39;,&#39; OPTIONALLY ENCLOSED BY &#39; &quot; &#39;LINES TERMINATED BY &#39;\n&#39;</code></p>
+<p>得到的导出文件如下</p>
+<p><img src="https://pic.superbed.cn/item/5d5830a2451253d178b95328.jpg"></p>
+<p>select …… into dumpfile</p>
+<p>而接着使用命令 <code>select * from test into dumpfile &#39;/tmp/test.txt&#39;</code> 使用dumpfile进行导出</p>
+<p>可以看到此命令在执行的时候提示输出超过一行</p>
+<p><img src="https://pic.superbed.cn/item/5d5830bc451253d178b95571.jpg"></p>
+<p>查看文件内容</p>
+<p><img src="https://pic.superbed.cn/item/5d5830d2451253d178b95766.jpg"></p>
+<p>可以看见通过dumpfile导出的数据行数据之间并未进行换行且只导出了部分数据</p>
+<h3 id="写入webshell或者udf下的差距"><a href="#写入webshell或者udf下的差距" class="headerlink" title="写入webshell或者udf下的差距"></a>写入webshell或者udf下的差距</h3><p>select …… into outfile</p>
+<p>使用命令 <code>select &#39;a\naa\raaaa&#39; into outfile &#39;/tmp/test.txt&#39;</code> 来看一下在常用的写文件场景下的结果</p>
+<p><img src="https://pic.superbed.cn/item/5d58310b451253d178b95b92.jpg"></p>
+<p>可以看到outfile对导出内容中的\n等特殊字符进行了转义，并且在文件内容的末尾增加了一个新行</p>
+<p>接着使用命令 <code>select &#39;a\naa\raaaa&#39; into dumpfile &#39;/tmp/test.txt&#39;</code> 来看一下</p>
+<p><img src="https://pic.superbed.cn/item/5d583137451253d178b95f31.jpg"></p>
+<p>可以看到dumpfile对文件内容是原意写入，未做任何转移和增加。这也就是为什么 <code>在平常的UDF提权中使用dumpfile进行dll文件</code> 写入的原因</p>
+<p>还有一个需要关注的点就是：outfile后面不能接0x开头或者char转换以后的路径，只能是单引号路径。这个问题在php注入中更加麻烦，因为会自动将单引号转义成’,那么基本就GG了，但是load_file，后面的路径可以是单引号、0x、char转换的字符，但是路径中的斜杠是/而不是\</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1145,7 +1260,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
